@@ -1,6 +1,18 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { type ReactNode, useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, PlusSquare, ShoppingCart, Users } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  PlusSquare,
+  ShoppingCart,
+  Users,
+  Menu,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -14,26 +26,54 @@ const sidebarItems = [
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
-  return (
-    <div className="flex h-screen bg-background">
-      <aside className="w-64 bg-muted/50 border-r">
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">Admin Panel</h1>
-        </div>
-        <nav className="mt-4">
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  const Sidebar = () => (
+    <div className="space-y-4 py-4">
+      <div className="px-3 py-2">
+        <h2 className="mb-2 px-4 text-lg font-semibold">Admin Panel</h2>
+        <div className="space-y-1">
           {sidebarItems.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="flex items-center px-4 py-2 text-sm hover:bg-muted"
-            >
-              <item.icon className="mr-2 h-4 w-4" />
-              {item.label}
+            <Link key={index} href={item.href}>
+              <span
+                className={cn(
+                  "flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                  pathname === item.href ? "bg-accent" : "transparent"
+                )}
+              >
+                <item.icon className="mr-2 h-4 w-4" />
+                {item.label}
+              </span>
             </Link>
           ))}
-        </nav>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex min-h-screen">
+      <aside className="hidden w-64 border-r bg-muted/50 lg:block">
+        <Sidebar />
       </aside>
-      <main className="flex-1 overflow-y-auto p-8">{children}</main>
+      <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+        <SheetContent side="left" className="w-64 p-0">
+          <Sidebar />
+        </SheetContent>
+      </Sheet>
+      <div className="flex-1">
+        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 lg:hidden">
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle sidebar</span>
+            </Button>
+          </SheetTrigger>
+          <h1 className="font-semibold">Admin Panel</h1>
+        </header>
+        <main className="flex-1 p-4 md:p-6">{children}</main>
+      </div>
     </div>
   );
 }
