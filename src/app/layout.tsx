@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
 import BottomNavigation from "@/components/bottom-navigation";
 import { Footer } from "@/components/footer";
+import { Toaster } from "sonner";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -36,6 +37,7 @@ export default function RootLayout({
             </main>
             <Footer />
             <BottomNavigation />
+            <Toaster richColors position="top-center" />
           </div>
         </ThemeProvider>
       </body>

@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -44,10 +44,7 @@ export default function ProfilePage() {
     console.log(values);
     // Handle profile update logic here
     setIsEditing(false);
-    toast({
-      title: "Profile Updated",
-      description: "Your profile has been successfully updated.",
-    });
+    toast("Your profile has been successfully updated.");
   }
 
   return (

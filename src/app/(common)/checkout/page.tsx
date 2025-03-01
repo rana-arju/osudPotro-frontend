@@ -76,7 +76,7 @@ export default function CheckoutPage() {
                         <FormControl>
                           <Input placeholder="John Doe" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500" />
                       </FormItem>
                     )}
                   />
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500" />
                       </FormItem>
                     )}
                   />
@@ -109,7 +109,7 @@ export default function CheckoutPage() {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500" />
                       </FormItem>
                     )}
                   />
@@ -123,7 +123,7 @@ export default function CheckoutPage() {
                           <FormControl>
                             <Input placeholder="New York" {...field} />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500" />
                         </FormItem>
                       )}
                     />
@@ -136,7 +136,7 @@ export default function CheckoutPage() {
                           <FormControl>
                             <Input placeholder="10001" {...field} />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500" />
                         </FormItem>
                       )}
                     />
@@ -202,7 +202,7 @@ export default function CheckoutPage() {
                             </div>
                           </RadioGroup>
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500" />
                       </FormItem>
                     )}
                   />
