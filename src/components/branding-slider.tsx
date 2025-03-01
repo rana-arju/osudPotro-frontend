@@ -6,14 +6,38 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const brands = [
-  { name: "Brand 1", logo: "/brands/brand1.svg" },
-  { name: "Brand 2", logo: "/brands/brand2.svg" },
-  { name: "Brand 3", logo: "/brands/brand3.svg" },
-  { name: "Brand 4", logo: "/brands/brand4.svg" },
-  { name: "Brand 5", logo: "/brands/brand5.svg" },
-  { name: "Brand 6", logo: "/brands/brand6.svg" },
-  { name: "Brand 7", logo: "/brands/brand7.svg" },
-  { name: "Brand 8", logo: "/brands/brand8.svg" },
+  {
+    name: "Brand 1",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwNDRcLzEwMDA0NC1JbmNlcHRhLVBoYXJtYWNldXRpY2Fscy1MdGQtYmNvb25iLnBuZyIsImVkaXRzIjpbXX0=",
+  },
+  {
+    name: "Brand 2",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwMTZcLzEwMDAxNi1TcXVhcmUtUGhhcm1hY2V1dGljYWxzLVBMQy1mb2xpenUucG5nIiwiZWRpdHMiOltdfQ==",
+  },
+  {
+    name: "Brand 3",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwMjlcLzEwMDAyOS1CZXhpbWNvLVBoYXJtYWNldXRpY2Fscy1MdGQtNWdtNGEwLnBuZyIsImVkaXRzIjpbXX0=",
+  },
+  {
+    name: "Brand 4",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwMDZcLzEwMDAwNi1SZW5hdGEtTGltaXRlZC1veDRwNGYucG5nIiwiZWRpdHMiOltdfQ==",
+  },
+  {
+    name: "Brand 5",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwNjNcLzEwMDA2My1Fc2theWVmLVBoYXJtYWNldXRpY2Fscy1MdGQtNzVwdTJhLnBuZyIsImVkaXRzIjpbXX0=",
+  },
+  {
+    name: "Brand 6",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwNDVcLzEwMDA0NS1Mb2dvLXdvcmtzXzAwMTFfMTctN3dxcXMwLnBuZyIsImVkaXRzIjpbXX0=",
+  },
+  {
+    name: "Brand 7",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwMzBcLzEwMDAzMC1Mb2dvLXdvcmtzXzAwMTZfMTYtdmxnazhzLnBuZyIsImVkaXRzIjpbXX0=",
+  },
+  {
+    name: "Brand 8",
+    logo: "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0QnJhbmQtcGJfYmFubmVyXC8xMDAwNDNcLzEwMDA0My1CZWFjb24tUGhhcm1hY2V1dGljYWxzLUx0ZC1oY3BlczEucG5nIiwiZWRpdHMiOltdfQ==",
+  },
 ];
 
 export function BrandingSlider() {

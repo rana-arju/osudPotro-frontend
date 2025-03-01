@@ -18,6 +18,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -89,26 +90,13 @@ export default function Header() {
           </SheetContent>
         </Sheet>
 
-        <Link
-          href="/"
-          className="mr-6 flex items-center gap-2 text-lg font-semibold text-primary"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-primary"
-          >
-            <path d="m12 14 4-4" />
-            <path d="M3.34 17a10 10 0 1 1 17.32 0" />
-          </svg>
-          <span className="hidden sm:inline-block">MediShop</span>
+        <Link href="/" className="mr-6">
+          <Image
+            src="https://cdn.osudpotro.com/appImage/web-osudpotro-logo.png?w=256"
+            width={100}
+            height={100}
+            alt="OsudPotro"
+          />
         </Link>
 
         <NavigationMenu className="hidden md:flex">

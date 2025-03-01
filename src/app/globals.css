@@ -117,6 +117,12 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+}
 
 @layer base {
   * {

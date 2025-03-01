@@ -9,7 +9,7 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">About Us</h3>
             <p className="text-sm text-muted-foreground">
-              MediShop is your trusted online pharmacy for all your healthcare
+             <span className="text-primary font-bold text-xl">OsudPotro</span> is your trusted online pharmacy for all your healthcare
               needs. We provide genuine medicines and excellent customer
               service.
             </p>
