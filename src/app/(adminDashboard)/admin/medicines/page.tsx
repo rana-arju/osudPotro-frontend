@@ -1,9 +1,6 @@
 "use client";
 
-import React from "react";
-
 import { useState } from "react";
-import { useTable, usePagination } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,6 +19,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 // Mock data for medicines
 const initialMedicines = [
@@ -38,67 +43,19 @@ export default function ManageMedicines() {
     stock: 0,
     price: 0,
   });
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Stock",
-        accessor: "stock",
-      },
-      {
-        Header: "Price",
-        accessor: "price",
-        Cell: ({ value }) => `$${value.toFixed(2)}`,
-      },
-      {
-        Header: "Actions",
-        Cell: ({ row }) => (
-          <>
-            <Button variant="outline" size="sm" className="mr-2">
-              Edit
-            </Button>
-            <Button variant="destructive" size="sm">
-              Delete
-            </Button>
-          </>
-        ),
-      },
-    ],
-    []
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data: medicines,
-      initialState: { pageIndex: 0, pageSize: 10 },
-    },
-    usePagination
-  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const addMedicine = () => {
     setMedicines([...medicines, { id: medicines.length + 1, ...newMedicine }]);
     setNewMedicine({ name: "", stock: 0, price: 0 });
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = medicines.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(medicines.length / itemsPerPage);
 
   return (
     <div>
@@ -165,72 +122,64 @@ export default function ManageMedicines() {
           </DialogContent>
         </Dialog>
       </div>
-      <Table {...getTableProps()}>
-        <TableHeader>
-          {headerGroups.map((headerGroup) => (
-            <TableRow
-              key={headerGroup.id}
-              {...headerGroup.getHeaderGroupProps()}
-            >
-              {headerGroup.headers.map((column) => (
-                <TableHead {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </TableHead>
-              ))}
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Stock</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <TableRow {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <TableCell {...cell.getCellProps()}>
-                    {cell.render("Cell")}
-                  </TableCell>
-                ))}
+          </TableHeader>
+          <TableBody>
+            {currentItems.map((medicine) => (
+              <TableRow key={medicine.id}>
+                <TableCell>{medicine.name}</TableCell>
+                <TableCell>{medicine.stock}</TableCell>
+                <TableCell>${medicine.price.toFixed(2)}</TableCell>
+                <TableCell>
+                  <Button variant="outline" size="sm" className="mr-2">
+                    Edit
+                  </Button>
+                  <Button variant="destructive" size="sm">
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-      <div className="mt-4 flex items-center justify-between">
-        <div>
-          <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {"<<"}
-          </Button>
-          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </Button>
-          <Button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </Button>
-          <Button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            {">>"}
-          </Button>
-        </div>
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="mt-4">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              />
+            </PaginationItem>
+            {[...Array(totalPages)].map((_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(index + 1)}
+                  isActive={currentPage === index + 1}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
