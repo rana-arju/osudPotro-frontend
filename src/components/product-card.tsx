@@ -24,7 +24,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="aspect-square overflow-hidden bg-muted/40">
         <Image
-          src={product.image || "/placeholder.svg"}
+          src={
+            product.image ||
+            "https://www.lazzpharma.com/Content/ImageData/Product/Small/3917f8e3-7c37-4c3c-910d-b8783a5499e3/KT%20LIQUID%20.webp"
+          }
           alt={product.name}
           width={300}
           height={300}

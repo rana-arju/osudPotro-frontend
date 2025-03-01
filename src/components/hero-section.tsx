@@ -3,17 +3,17 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-muted dark:bg-muted/20 rounded-lg">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-[#072a4d] dark:bg-[#0A2540] rounded-lg custom-bg bg-blend-overlay">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="space-y-4">
-            <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+            <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-[#007bff]">
               New: Free Delivery on Orders Over $50
             </div>
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
               Your Health, Our Priority
             </h1>
-            <p className="text-muted-foreground md:text-xl">
+            <p className="text-[#E5E5E5] md:text-xl">
               Get your medicines delivered at your doorstep. Fast, reliable, and
               secure.
             </p>
