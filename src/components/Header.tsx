@@ -283,6 +283,9 @@ export default function Header() {
           </Button>
 
           <ModeToggle />
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/auth">Sign In</Link>
+          </Button>
         </div>
       </div>
     </header>

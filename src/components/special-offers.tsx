@@ -11,9 +11,9 @@ export default function SpecialOffers() {
           Special Offers
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="relative overflow-hidden rounded-lg bg-primary/10 dark:bg-primary/20">
-            <div className="p-6 md:p-8">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+          <div className="overflow-hidden rounded-lg bg-primary/10 dark:bg-primary/20 grid grid-cols-1 md:grid-cols-2 justify-center items-center">
+            <div className="p-6 md:p-8 order-2 md:order-1 ">
               <div className="flex items-center gap-2 mb-2">
                 <Tag className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium text-primary">
@@ -36,19 +36,19 @@ export default function SpecialOffers() {
                 </Link>
               </Button>
             </div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 md:w-40 md:h-40 overflow-hidden">
+            <div className="bottom-0 right-0 w-64 h-64 md:w-64 md:h-64 overflow-hidden flex flex-col justify-center items-center order-1 md:order-2">
               <Image
-                src="/placeholder.svg?height=160&width=160"
-                alt="Wellness products"
-                width={160}
-                height={160}
+                src="https://cdn.osudpotro.com/project_assets/All%20Medicine.webp?w=1080"
+                alt="Personal care products"
+                width={260}
+                height={260}
                 className="object-cover"
               />
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-lg bg-secondary/10 dark:bg-secondary/20">
-            <div className="p-6 md:p-8">
+          <div className="overflow-hidden rounded-lg bg-secondary/10 dark:bg-secondary/20 grid grid-cols-1 md:grid-cols-2 justify-center items-center">
+            <div className="p-6 md:p-8 order-2 md:order-1">
               <div className="flex items-center gap-2 mb-2">
                 <Tag className="h-4 w-4 text-secondary" />
                 <span className="text-sm font-medium text-secondary">
@@ -56,7 +56,7 @@ export default function SpecialOffers() {
                 </span>
               </div>
               <h3 className="text-2xl font-bold mb-2">Personal Care</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 w-full">
                 Premium skincare, oral care, and personal hygiene products.
               </p>
               <div className="flex items-center gap-2 mb-4">
@@ -71,12 +71,12 @@ export default function SpecialOffers() {
                 </Link>
               </Button>
             </div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 md:w-40 md:h-40 overflow-hidden">
+            <div className="bottom-0 right-0 w-64 h-64 md:w-64 md:h-64 overflow-hidden flex flex-col justify-center items-center order-1 md:order-2">
               <Image
-                src="/placeholder.svg?height=160&width=160"
+                src="https://cdn.osudpotro.com/project_assets/Personal%20Care%20Products.webp?w=1080"
                 alt="Personal care products"
-                width={160}
-                height={160}
+                width={260}
+                height={260}
                 className="object-cover"
               />
             </div>
