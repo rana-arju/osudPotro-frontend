@@ -5,11 +5,11 @@ import Link from "next/link";
 
 interface ProductCardProps {
   product: {
-    id: number;
+    _id: number;
     name: string;
     description: string;
     price: number;
-    image: string;
+    images: string;
     category?: string;
     rating?: number;
   };
@@ -18,14 +18,14 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-lg border bg-card transition-all hover:shadow-md">
-      <Link href={`/products/${product.id}`} className="absolute inset-0 z-10">
+      <Link href={`/products/${product._id}`} className="absolute inset-0 z-10">
         <span className="sr-only">View {product.name}</span>
       </Link>
 
       <div className="aspect-square overflow-hidden bg-muted/40">
         <Image
           src={
-            product.image ||
+            product.images?.[0] ||
             "https://www.lazzpharma.com/Content/ImageData/Product/Small/3917f8e3-7c37-4c3c-910d-b8783a5499e3/KT%20LIQUID%20.webp"
           }
           alt={product.name}
@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.description}
         </p>
 
-        {product.rating && (
+  { /*     {product.rating && (
           <div className="mt-2 flex items-center">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
@@ -73,6 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
         )}
+          */}
 
         <div className="mt-3 flex items-center justify-between">
           <p className="font-semibold text-primary">

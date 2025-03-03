@@ -1,40 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getMedicineById } from "@/services/medicine";
 import { Star, Truck, ShieldCheck, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function ProductPage({
   params,
-}: {
-  params: { id: string };
-}) {
+}: any) {
   // Mock product data - in a real app, fetch this based on params.id
   const id = params?.id;
-  const product = {
-    id: id,
-    name: "Paracetamol 500mg",
-    description: "Pain reliever and fever reducer",
-    longDescription:
-      "Paracetamol is a medication used to treat fever and mild to moderate pain. At a standard dose, paracetamol only slightly decreases body temperature; it is inferior to ibuprofen in that respect, and the benefits of its use for fever are unclear.",
-    price: 5.99,
-    image: "/placeholder.svg?height=400&width=400",
-    category: "Pain Relief",
-    rating: 4.5,
-    reviews: 128,
-    stock: 50,
-    dosage: "500mg",
-    form: "Tablets",
-    quantity: "20 tablets",
-    manufacturer: "MediPharm",
-    usage:
-      "Take 1-2 tablets every 4-6 hours as needed. Do not exceed 8 tablets in 24 hours.",
-    sideEffects:
-      "Rare side effects may include nausea, stomach pain, loss of appetite, headache, yellowing of skin or eyes. Seek medical attention if you experience any of these symptoms.",
-    precautions:
-      "Do not use with other products containing paracetamol. Consult your doctor if you have liver disease, kidney disease, or alcohol dependency.",
-  };
+
+  const productData = await getMedicineById(id);
+  console.log("product", productData);
+  const product = productData?.data;
 
   return (
     <div>
@@ -46,7 +26,7 @@ export default async function ProductPage({
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-background rounded-lg p-6 flex items-center justify-center">
           <Image
-            src={product.image || "/placeholder.svg"}
+            src={product?.images?.[0] || "/placeholder.svg"}
             alt={product.name}
             width={400}
             height={400}
@@ -90,14 +70,14 @@ export default async function ProductPage({
               <strong>Dosage:</strong> {product.dosage}
             </p>
             <p>
-              <strong>Form:</strong> {product.form}
+              <strong>Form:</strong> {product.type}
             </p>
             <p>
               <strong>Quantity:</strong> {product.quantity}
             </p>
-            <p>
-              <strong>Manufacturer:</strong> {product.manufacturer}
-            </p>
+            <Link href={`/manufacturer/${product.manufacturer._id}`} className="underline text-primary">
+              <strong>Manufacturer:</strong> {product.manufacturer.name}
+            </Link>
           </div>
 
           <div className="flex space-x-4">
@@ -137,17 +117,17 @@ export default async function ProductPage({
         </TabsList>
         <TabsContent value="description" className="mt-6">
           <div className="text-muted-foreground">
-            <p>{product.longDescription}</p>
+            <p>{product.description}</p>
           </div>
         </TabsContent>
         <TabsContent value="usage" className="mt-6">
           <div className="text-muted-foreground">
-            <p>{product.usage}</p>
+            <p>{product.usege}</p>
           </div>
         </TabsContent>
         <TabsContent value="side-effects" className="mt-6">
           <div className="text-muted-foreground">
-            <p>{product.sideEffects}</p>
+            <p>{product.sideEffect}</p>
           </div>
         </TabsContent>
         <TabsContent value="precautions" className="mt-6">

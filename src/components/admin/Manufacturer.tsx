@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,34 +31,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { createManufacturer } from "@/services/Manufacturers";
+import {
+  createManufacturer,
+  deleteManufacturer,
+  updateManufacturer,
+} from "@/services/Manufacturers";
 
 const manufacturerSchema = z.object({
-  id: z.number().optional(),
+  _id: z.string().optional(),
   name: z.string().min(2, "Manufacturer name must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
 });
 
 type Manufacturer = z.infer<typeof manufacturerSchema>;
-
-const updateManufacturer = async (
-  manufacturer: Manufacturer
-): Promise<Manufacturer> => {
-  const response = await fetch(`/api/manufacturers/${manufacturer.id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(manufacturer),
-  });
-  if (!response.ok) throw new Error("Failed to update manufacturer");
-  return response.json();
-};
-
-const deleteManufacturer = async (id: number): Promise<void> => {
-  const response = await fetch(`/api/manufacturers/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) throw new Error("Failed to delete manufacturer");
-};
 
 export default function Manufacturers({ manufacturers }: any) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -76,12 +61,15 @@ export default function Manufacturers({ manufacturers }: any) {
   const onSubmit = async (values: Manufacturer) => {
     try {
       if (editingManufacturer) {
-        const updated = await updateManufacturer({
-          ...values,
-          id: editingManufacturer.id,
-        });
+        const updated = await updateManufacturer(
+          values,
+          editingManufacturer._id!
+        );
+        console.log("updated", updated);
 
-        toast.success("Manufacturer updated successfully");
+        if (updated?.success) {
+          toast.success("Manufacturer updated successfully");
+        }
       } else {
         const res = await createManufacturer(values);
         console.log(res);
@@ -99,10 +87,14 @@ export default function Manufacturers({ manufacturers }: any) {
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     try {
-      await deleteManufacturer(id);
-      toast.success("Manufacturer deleted successfully");
+      const res = await deleteManufacturer(id);
+      if (res.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
     } catch {
       toast.error("destructive");
     }
@@ -121,6 +113,7 @@ export default function Manufacturers({ manufacturers }: any) {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button
+              className="cursor-pointer"
               onClick={() => {
                 setEditingManufacturer(null);
                 form.reset();
@@ -172,7 +165,7 @@ export default function Manufacturers({ manufacturers }: any) {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">
+                <Button type="submit" className="cursor-pointer">
                   {editingManufacturer ? "Update" : "Add"} Manufacturer
                 </Button>
               </form>
@@ -199,7 +192,7 @@ export default function Manufacturers({ manufacturers }: any) {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mr-2"
+                      className="mr-2 cursor-pointer"
                       onClick={() => handleEdit(manufacturer)}
                     >
                       Edit
@@ -207,7 +200,8 @@ export default function Manufacturers({ manufacturers }: any) {
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => handleDelete(manufacturer.id!)}
+                      className="cursor-pointer"
+                      onClick={() => handleDelete(manufacturer._id!)}
                     >
                       Delete
                     </Button>

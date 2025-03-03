@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,6 @@ import {
   deleteCategory,
   getCategoryById,
   updateCategory,
-
 } from "@/services/category";
 import { toast } from "sonner";
 import {
@@ -39,11 +38,10 @@ import {
 
 const categorySchema = z.object({
   name: z.string().min(2, "Category name must be at least 2 characters"),
+  _id: z.string().optional(),
 });
 
 type Category = z.infer<typeof categorySchema>;
-
-
 
 export default function Categories({ categories }: { categories: Category[] }) {
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(
@@ -51,25 +49,25 @@ export default function Categories({ categories }: { categories: Category[] }) {
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-   const form = useForm<Category>({
-     resolver: zodResolver(categorySchema),
-     defaultValues: {
-       name: "",
-     },
-   });
+  const form = useForm<Category>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: {
+      name: "",
+      _id: editingCategoryId!,
+    },
+  });
 
   const fetchCategoryData = async (id: string) => {
     try {
-        
       const res = await getCategoryById(id);
-      
-      if (res?.success ) {
-          setEditingCategoryId(id);
-          setIsEditModalOpen(true);
-          form.reset({ name: res.data.name });
+
+      if (res?.success) {
+        setEditingCategoryId(id);
+        setIsEditModalOpen(true);
+        form.reset({ name: res.data.name });
       } else {
         toast.error("Failed to fetch category data.");
-      } 
+      }
     } catch {
       toast.error("Error fetching category data.");
     }
@@ -92,7 +90,8 @@ export default function Categories({ categories }: { categories: Category[] }) {
   const handleUpdateCategory = async (values: Category) => {
     if (!editingCategoryId) return;
     try {
-   
+      console.log("afsdfaf", values);
+
       const response = await updateCategory(editingCategoryId, values);
       if (response?.success) {
         toast.success(response.message);
@@ -100,7 +99,6 @@ export default function Categories({ categories }: { categories: Category[] }) {
       } else {
         toast.error(response?.message);
       }
- 
     } catch {
       toast.error("Failed to update category. Please try again.");
     }
@@ -169,14 +167,16 @@ export default function Categories({ categories }: { categories: Category[] }) {
                       variant="outline"
                       size="sm"
                       className="mr-2 cursor-pointer"
-                      onClick={() => fetchCategoryData(category._id)}
+                      onClick={() =>
+                        category._id && fetchCategoryData(category._id)
+                      }
                     >
                       Edit
                     </Button>
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => handleDelete(category._id)}
+                      onClick={() => category._id && handleDelete(category._id)}
                       className="cursor-pointer"
                     >
                       Delete
@@ -217,7 +217,9 @@ export default function Categories({ categories }: { categories: Category[] }) {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Update Category</Button>
+              <Button type="submit" className="cursor-pointer">
+                Update Category
+              </Button>
             </form>
           </Form>
         </DialogContent>

@@ -54,12 +54,14 @@ export const deleteManufacturer = async (id: string) => {
         },
       }
     );
+
     revalidateTag("Manufacturer");
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");
   }
-};export const updateManufacturer = async (id: string, values: any) => {
+};
+export const updateManufacturer = async (values: any, id: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/manufacturer/${id}`,
@@ -88,7 +90,6 @@ export const getManufacturerById = async (id: string) => {
         },
       }
     );
-    revalidateTag("Manufacturer");
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");

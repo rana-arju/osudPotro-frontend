@@ -3,11 +3,9 @@
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const createCategory = async (data: any) => {
+export const createMedicine = async (data: any) => {
   try {
-    console.log("rana", JSON.stringify(data));
-    
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/category`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/medicine`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,18 +14,18 @@ export const createCategory = async (data: any) => {
 
       body: JSON.stringify(data),
     });
-    revalidateTag("Category");
+    revalidateTag("medicine");
 
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");
   }
 };
-export const getAllCategory = async () => {
+export const getAllMedicine = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/category`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/medicine`, {
       next: {
-        tags: ["Category"],
+        tags: ["medicine"],
       },
     });
 
@@ -36,10 +34,10 @@ export const getAllCategory = async () => {
     return new Error(error.message || "Unknown error");
   }
 };
-export const deleteCategory = async (id: string) => {
+export const deleteMedicine = async (id: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/category/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/medicine/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -48,43 +46,43 @@ export const deleteCategory = async (id: string) => {
         },
       }
     );
-    revalidateTag("Category");
+
+    revalidateTag("medicine");
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");
   }
 };
-export const updateCategory = async (id: string, values: any) => {
-    
+export const updateMedicine = async (id: string, values: any) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/category/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/medicine/${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: (await cookies())?.get("accessToken")!.value,
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       }
     );
-    revalidateTag("Category");
+    revalidateTag("medicine");
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");
   }
 };
-export const getCategoryById = async (id: string) => {
+export const getMedicineById = async (id: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/category/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/medicine/${id}`,
       {
         next: {
-          tags: ["Category"],
+          tags: ["medicine"],
         },
       }
     );
-    revalidateTag("Category");
+
     return res.json();
   } catch (error: any) {
     return new Error(error.message || "Unknown error");

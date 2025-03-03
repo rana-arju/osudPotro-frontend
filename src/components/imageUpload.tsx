@@ -91,6 +91,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUploadComplete }) => {
             <Image
               src={previewUrl}
               alt="Preview"
+              width={30}
+              height={40}
               className="w-full h-24 object-cover"
             />
             <button
@@ -109,7 +111,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUploadComplete }) => {
         onClick={handleUpload}
         disabled={files.length === 0 || uploading}
         className={cn(
-          "w-full flex items-center gap-2 justify-center",
+          "w-full flex items-center gap-2 justify-center cursor-pointer",
           uploading && "opacity-50 cursor-not-allowed"
         )}
       >
