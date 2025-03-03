@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,8 +22,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createCategory, deleteCategory } from "@/services/category";
+import {
+  createCategory,
+  deleteCategory,
+  getCategoryById,
+  updateCategory,
+
+} from "@/services/category";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const categorySchema = z.object({
   name: z.string().min(2, "Category name must be at least 2 characters"),
@@ -31,56 +43,80 @@ const categorySchema = z.object({
 
 type Category = z.infer<typeof categorySchema>;
 
-// Mock data for categories
 
-export default function Categories({ categories }:any) {
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
-  const form = useForm<Category>({
-    resolver: zodResolver(categorySchema),
-    defaultValues: {
-      name: "",
-    },
-  });
+export default function Categories({ categories }: { categories: Category[] }) {
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(
+    null
+  );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const onSubmit = async (values: Category) => {
+   const form = useForm<Category>({
+     resolver: zodResolver(categorySchema),
+     defaultValues: {
+       name: "",
+     },
+   });
+
+  const fetchCategoryData = async (id: string) => {
+    try {
+        
+      const res = await getCategoryById(id);
+      
+      if (res?.success ) {
+          setEditingCategoryId(id);
+          setIsEditModalOpen(true);
+          form.reset({ name: res.data.name });
+      } else {
+        toast.error("Failed to fetch category data.");
+      } 
+    } catch {
+      toast.error("Error fetching category data.");
+    }
+  };
+
+  const handleAddCategory = async (values: Category) => {
     try {
       const response = await createCategory(values);
-      console.log(response);
-
       if (response?.success) {
         toast.success(response.message);
-        //router.push("/");
         form.reset();
       } else {
         toast.error(response?.message);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Register failed. try again");
+    } catch {
+      toast.error("Failed to add category. Please try again.");
     }
   };
 
-  const handleDelete = async(id: string) => {
-   console.log(id);
-   try {
-     const res = await deleteCategory(id);
-     if (res?.success) {
-        toast.success(res?.message)
-     }else{
-        toast.error(res?.message)
-     }
-   } catch {
-    toast.error("Category not deleted. try again")
-    
-   }
-  
+  const handleUpdateCategory = async (values: Category) => {
+    if (!editingCategoryId) return;
+    try {
    
+      const response = await updateCategory(editingCategoryId, values);
+      if (response?.success) {
+        toast.success(response.message);
+        setIsEditModalOpen(false);
+      } else {
+        toast.error(response?.message);
+      }
+ 
+    } catch {
+      toast.error("Failed to update category. Please try again.");
+    }
   };
 
-  const editCategory = (category: Category) => {
-    setEditingCategory(category);
-    form.reset(category);
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteCategory(id);
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch {
+      toast.error("Category not deleted. Please try again.");
+    }
   };
 
   return (
@@ -88,8 +124,13 @@ export default function Categories({ categories }:any) {
       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
         Manage Categories
       </h2>
+
+      {/* Add Category Form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mb-6">
+        <form
+          onSubmit={form.handleSubmit(handleAddCategory)}
+          className="space-y-4 mb-6"
+        >
           <FormField
             control={form.control}
             name="name"
@@ -104,10 +145,12 @@ export default function Categories({ categories }:any) {
             )}
           />
           <Button type="submit" className="cursor-pointer">
-            {editingCategory ? "Update" : "Add"} Category
+            Add Category
           </Button>
         </form>
       </Form>
+
+      {/* Categories Table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -117,32 +160,68 @@ export default function Categories({ categories }:any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories?.length ? categories?.map((category: any) => (
-              <TableRow key={category._id}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mr-2 cursor-pointer"
-                    onClick={() => editCategory(category)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => handleDelete(category._id)}
-                    className="cursor-pointer"
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+            {categories?.length ? (
+              categories.map((category) => (
+                <TableRow key={category._id}>
+                  <TableCell>{category.name}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mr-2 cursor-pointer"
+                      onClick={() => fetchCategoryData(category._id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(category._id)}
+                      className="cursor-pointer"
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={2}>No Category Found</TableCell>
               </TableRow>
-            )) : <p>No Category Found</p>}
+            )}
           </TableBody>
         </Table>
       </div>
+
+      {/* Edit Category Modal */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Category</DialogTitle>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleUpdateCategory)}
+              className="space-y-4"
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Update Category</Button>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
