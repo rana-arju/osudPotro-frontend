@@ -38,7 +38,6 @@ const Register = () => {
  
     try {
       const response = await registerUser(values);
-      console.log(response);
       if (response?.success) {
         toast.success(response.message);
         router.push("/")
