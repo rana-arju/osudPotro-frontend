@@ -5,10 +5,15 @@ import { Star, Truck, ShieldCheck, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   // Mock product data - in a real app, fetch this based on params.id
+  const id = params?.id;
   const product = {
-    id: params.id,
+    id: id,
     name: "Paracetamol 500mg",
     description: "Pain reliever and fever reducer",
     longDescription:

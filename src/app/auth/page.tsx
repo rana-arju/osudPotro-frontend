@@ -1,21 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+
 import {
   Card,
   CardContent,
@@ -23,51 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, Lock, User } from "lucide-react";
-
-const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
-
-type RegisterFormValues = z.infer<typeof registerSchema>;
-type LoginFormValues = z.infer<typeof loginSchema>;
+import Register from "@/components/auth/register";
+import Login from "@/components/auth/login";
 
 export default function AuthPage() {
-  const [activeTab, setActiveTab] = useState("register");
-
-  const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
-
-  const loginForm = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  function onRegisterSubmit(values: RegisterFormValues) {
-    console.log(values);
-    // Handle registration logic here
-  }
-
-  function onLoginSubmit(values: LoginFormValues) {
-    console.log(values);
-    // Handle login logic here
-  }
+  const [activeTab, setActiveTab] = useState("login");
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -92,132 +41,10 @@ export default function AuthPage() {
                 <TabsTrigger value="login">Login</TabsTrigger>
               </TabsList>
               <TabsContent value="register">
-                <Form {...registerForm}>
-                  <form
-                    onSubmit={registerForm.handleSubmit(onRegisterSubmit)}
-                    className="space-y-4"
-                  >
-                    <FormField
-                      control={registerForm.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                              <Input
-                                placeholder="John Doe"
-                                {...field}
-                                className="pl-10"
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-500" />{" "}
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={registerForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                              <Input
-                                type="email"
-                                placeholder="john@example.com"
-                                {...field}
-                                className="pl-10"
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-500" />{" "}
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={registerForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                              <Input
-                                type="password"
-                                placeholder="********"
-                                {...field}
-                                className="pl-10"
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-500" />{" "}
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full">
-                      Register
-                    </Button>
-                  </form>
-                </Form>
+                <Register />
               </TabsContent>
               <TabsContent value="login">
-                <Form {...loginForm}>
-                  <form
-                    onSubmit={loginForm.handleSubmit(onLoginSubmit)}
-                    className="space-y-4"
-                  >
-                    <FormField
-                      control={loginForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                              <Input
-                                type="email"
-                                placeholder="john@example.com"
-                                {...field}
-                                className="pl-10"
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-500" />{" "}
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={loginForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                              <Input
-                                type="password"
-                                placeholder="********"
-                                {...field}
-                                className="pl-10"
-                              />
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-red-500" />{" "}
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full">
-                      Login
-                    </Button>
-                  </form>
-                </Form>
+                <Login />
               </TabsContent>
             </Tabs>
           </CardContent>

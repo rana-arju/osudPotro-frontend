@@ -9,9 +9,9 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">About Us</h3>
             <p className="text-sm text-muted-foreground">
-             <span className="text-primary font-bold text-xl">OsudPotro</span> is your trusted online pharmacy for all your healthcare
-              needs. We provide genuine medicines and excellent customer
-              service.
+              <span className="text-primary font-bold text-xl">OsudPotro</span>{" "}
+              is your trusted online pharmacy for all your healthcare needs. We
+              provide genuine medicines and excellent customer service.
             </p>
           </div>
           <div>
@@ -108,7 +108,8 @@ export function Footer() {
               <h4 className="text-sm font-semibold mb-2">
                 Subscribe to our newsletter
               </h4>
-              <form className="flex">
+
+              <form className="grid grid-cols-1 gap-2  md:grid-cols-2 md:gap-0">
                 <input
                   type="email"
                   placeholder="Enter your email"

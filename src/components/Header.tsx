@@ -1,6 +1,14 @@
 "use client";
 
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,9 +27,20 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useUser } from "@/context/UserContext";
+import { logout } from "@/services/AuthService";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
+  const user = useUser();
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+    toast.success("Logout successfull!")
+  };
 
   return (
     <header className="sticky  top-0 z-50 w-full border-b bg-primary text-primary backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -262,18 +281,34 @@ export default function Header() {
               <span className="sr-only">Cart</span>
             </Link>
           </Button>
-
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/account">
-              <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Link>
-          </Button>
+          {user?.user ? (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <User className="h-5 w-5 cursor-pointer" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link href="/account">
+                      Profile
+                      <span className="sr-only">Profile</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <button onClick={handleLogout}>Logout</button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/auth">Sign In</Link>
+            </Button>
+          )}
 
           <ModeToggle />
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/auth">Sign In</Link>
-          </Button>
         </div>
       </div>
     </header>

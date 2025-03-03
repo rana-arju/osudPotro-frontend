@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -11,14 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+
 import {
   Pagination,
   PaginationContent,
@@ -27,6 +19,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Link from "next/link";
 
 // Mock data for medicines
 const initialMedicines = [
@@ -46,10 +39,7 @@ export default function ManageMedicines() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const addMedicine = () => {
-    setMedicines([...medicines, { id: medicines.length + 1, ...newMedicine }]);
-    setNewMedicine({ name: "", stock: 0, price: 0 });
-  };
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -61,66 +51,9 @@ export default function ManageMedicines() {
     <div>
       <h1 className="text-3xl font-bold mb-6">Manage Medicines</h1>
       <div className="mb-6">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Add New Medicine</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add New Medicine</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={newMedicine.name}
-                  onChange={(e) =>
-                    setNewMedicine({ ...newMedicine, name: e.target.value })
-                  }
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="stock" className="text-right">
-                  Stock
-                </Label>
-                <Input
-                  id="stock"
-                  type="number"
-                  value={newMedicine.stock}
-                  onChange={(e) =>
-                    setNewMedicine({
-                      ...newMedicine,
-                      stock: Number.parseInt(e.target.value),
-                    })
-                  }
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="price" className="text-right">
-                  Price
-                </Label>
-                <Input
-                  id="price"
-                  type="number"
-                  value={newMedicine.price}
-                  onChange={(e) =>
-                    setNewMedicine({
-                      ...newMedicine,
-                      price: Number.parseFloat(e.target.value),
-                    })
-                  }
-                  className="col-span-3"
-                />
-              </div>
-            </div>
-            <Button onClick={addMedicine}>Add Medicine</Button>
-          </DialogContent>
-        </Dialog>
+        <Link href="/admin/medicines/add">
+          <Button>Add New Medicine</Button>
+        </Link>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -157,7 +90,7 @@ export default function ManageMedicines() {
             <PaginationItem>
               <PaginationPrevious
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
+                // disabled={currentPage === 1}
               />
             </PaginationItem>
             {[...Array(totalPages)].map((_, index) => (
@@ -175,7 +108,7 @@ export default function ManageMedicines() {
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
-                disabled={currentPage === totalPages}
+                // disabled={currentPage === totalPages}
               />
             </PaginationItem>
           </PaginationContent>

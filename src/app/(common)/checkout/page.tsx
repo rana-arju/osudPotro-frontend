@@ -34,6 +34,7 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 export default function CheckoutPage() {
   const [isPrescriptionRequired, setIsPrescriptionRequired] = useState(false);
   const [prescriptionFile, setPrescriptionFile] = useState<File | null>(null);
+console.log(isPrescriptionRequired);
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
