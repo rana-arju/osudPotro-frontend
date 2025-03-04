@@ -4,7 +4,6 @@ import React from 'react'
 
 const ManufacturerPage = async() => {
   const manufacturers = await getAllManufacturer()
-  console.log("manufacturers", manufacturers);
   
   return (
     <div>

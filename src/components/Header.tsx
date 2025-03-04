@@ -39,7 +39,7 @@ export default function Header() {
   const handleLogout = async () => {
     await logout();
     router.push("/");
-    toast.success("Logout successfull!")
+    toast.success("Logout successfull!");
   };
 
   return (
@@ -291,8 +291,12 @@ export default function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Link href="/account">
-                      Profile
+                    <Link
+                      href={
+                        user?.user?.role === "admin" ? "/admin" : "/account"
+                      }
+                    >
+                      Dashboard
                       <span className="sr-only">Profile</span>
                     </Link>
                   </DropdownMenuItem>

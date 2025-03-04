@@ -26,6 +26,7 @@ const sidebarItems = [
   { icon: PlusSquare, label: "Manage Medicines", href: "/admin/medicines" },
   { icon: ShoppingCart, label: "Manage Orders", href: "/admin/orders" },
   { icon: Users, label: "Manage Users", href: "/admin/users" },
+  { icon: Users, label: "Profile manage", href: "/admin/profile" },
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {

@@ -65,7 +65,6 @@ export default function Manufacturers({ manufacturers }: any) {
           values,
           editingManufacturer._id!
         );
-        console.log("updated", updated);
 
         if (updated?.success) {
           toast.success("Manufacturer updated successfully");

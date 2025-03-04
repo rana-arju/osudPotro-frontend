@@ -29,7 +29,7 @@ const profileSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
-export default function ProfilePage({ userData }: any) {
+export default function Profile({ userData }: any) {
   const [isEditing, setIsEditing] = useState(false);
 
   const form = useForm<ProfileFormValues>({
@@ -44,14 +44,12 @@ export default function ProfilePage({ userData }: any) {
   });
 
   async function onSubmit(values: ProfileFormValues) {
-    console.log(values);
     // Handle profile update logic here
     try {
       const res = await updateProfile(values);
       if (res.success) {
         setIsEditing(false);
         toast.success(res?.message);
-       
       } else {
         toast.error(res?.message);
       }
@@ -61,7 +59,7 @@ export default function ProfilePage({ userData }: any) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-2 md:px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">My Profile</h1>
       <Card>
         <CardHeader>

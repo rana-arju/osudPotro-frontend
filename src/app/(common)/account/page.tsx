@@ -9,28 +9,37 @@ import {
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreditCard, Package, User } from "lucide-react";
-import ProfilePage from "../profile/page";
 import { getMe } from "@/services/AuthService";
+import Profile from "@/components/auth/Profile";
 
 export default async function AccountPage() {
   const res = await getMe();
   const userData = res?.data
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="w-full md:max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">My Account</h1>
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="profile" className="flex items-center">
+          <TabsTrigger
+            value="profile"
+            className="flex items-center cursor-pointer"
+          >
             <User className="mr-2 h-4 w-4" />
             Profile
           </TabsTrigger>
-          <TabsTrigger value="orders" className="flex items-center">
+          <TabsTrigger
+            value="orders"
+            className="flex items-center cursor-pointer"
+          >
             <Package className="mr-2 h-4 w-4" />
             Orders
           </TabsTrigger>
-          <TabsTrigger value="payment" className="flex items-center">
+          <TabsTrigger
+            value="payment"
+            className="flex items-center cursor-pointer"
+          >
             <CreditCard className="mr-2 h-4 w-4" />
             Payment Methods
           </TabsTrigger>
@@ -92,7 +101,7 @@ export default async function AccountPage() {
             </CardFooter>
           </Card>
           */}
-          <ProfilePage userData= {userData} />
+          <Profile userData={userData} />
         </TabsContent>
 
         <TabsContent value="orders" className="mt-6">

@@ -31,11 +31,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex min-h-screen flex-col">
-              <main className="flex-1 container mx-auto px-1 md:px-4 py-6">
+              <main>
                 {children}
               </main>
-            </div>
             <Toaster richColors position="top-center" />
           </ThemeProvider>
         </Providers>

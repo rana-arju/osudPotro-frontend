@@ -69,7 +69,53 @@ export const updateProfile = async (userData: FieldValues) => {
         body: JSON.stringify(userData),
       }
     );
-    
+
+    revalidateTag("auth");
+
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const updateRole = async (id: string, role: string) => {
+  console.log("servoce", role);
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/role/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+        body: JSON.stringify({ role }),
+      }
+    );
+
+    revalidateTag("auth");
+
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const updateStatus = async (id: string, status: string) => {
+  console.log("servoce", status);
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+
     revalidateTag("auth");
 
     return res.json();
@@ -113,8 +159,6 @@ export const getNewToken = async () => {
 };
 export const getMe = async () => {
   try {
-    console.log(" (await cookies())",  (await cookies())?.get("refreshToken")!.value);
-    
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/me`, {
       method: "GET",
       headers: {
@@ -122,6 +166,24 @@ export const getMe = async () => {
         Authorization: (await cookies())?.get("accessToken")!.value,
       },
     });
+
+    return res.json();
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+export const getAllUsers = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/users`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+      }
+    );
 
     return res.json();
   } catch (error: any) {
