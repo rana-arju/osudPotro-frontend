@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreditCard, Package, User } from "lucide-react";
 import { getMe } from "@/services/AuthService";
 import Profile from "@/components/auth/Profile";
-
+export const dynamic = "force-dynamic"; 
 export default async function AccountPage() {
   const res = await getMe();
   const userData = res?.data

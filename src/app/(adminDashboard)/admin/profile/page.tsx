@@ -1,7 +1,7 @@
+import React from "react";
 import Profile from "@/components/auth/Profile";
 import { getMe } from "@/services/AuthService";
-import React from "react";
-
+export const dynamic = "force-dynamic"; 
 const AdminProfile = async () => {
   const res = await getMe();
   const userData = res?.data;

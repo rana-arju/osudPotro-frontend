@@ -1,7 +1,7 @@
+import React from 'react'
 import UsersList from '@/components/admin/UsersList'
 import { getAllUsers} from '@/services/AuthService'
-import React from 'react'
-
+export const dynamic = "force-dynamic"; 
 async function UsersManage() {
   const res = await getAllUsers();
   

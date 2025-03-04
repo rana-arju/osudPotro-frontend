@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./features/cartSlice";
 import {
   FLUSH,
   PAUSE,
@@ -15,12 +15,12 @@ const persistOptions = {
   key: "cart",
   storage,
 };
-const persistedCart = persistReducer(persistOptions, cartReducer);
+//const persistedCart = persistReducer(persistOptions, cartReducer);
 
 export const store = () => {
   return configureStore({
     reducer: {
-      cart: persistedCart,
+   
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

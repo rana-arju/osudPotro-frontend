@@ -1,11 +1,10 @@
 "use server";
 
-import { ICoupon } from "@/types/cart";
-import { IOrder } from "@/types/order";
+
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const placeOrder = async (order: IOrder) => {
+export const placeOrder = async (order: any) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/order`, {
       method: "POST",
@@ -22,7 +21,7 @@ export const placeOrder = async (order: IOrder) => {
     return new Error(error.message || "Unknown error");
   }
 };
-export const addCoupon = async ({ shopId, subTotal, couponCode }: ICoupon) => {
+export const addCoupon = async ({ shopId, subTotal, couponCode }: any) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/coupon/${couponCode}`,
