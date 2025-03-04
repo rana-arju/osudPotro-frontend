@@ -89,12 +89,17 @@ const products = productsData?.data;
             </SelectContent>
           </Select>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product: any) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
+        {products?.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products?.map((product: any) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <p className="flex flex-col justify-center items-center text-xl capitalize font-bold text-primary">
+            There are no Medicine
+          </p>
+        )}
       </div>
     </div>
   );

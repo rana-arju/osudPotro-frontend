@@ -3,16 +3,19 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreditCard, Package, User } from "lucide-react";
+import ProfilePage from "../profile/page";
+import { getMe } from "@/services/AuthService";
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const res = await getMe();
+  const userData = res?.data
+
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">My Account</h1>
@@ -34,7 +37,8 @@ export default function AccountPage() {
         </TabsList>
 
         <TabsContent value="profile" className="mt-6">
-          <Card>
+          {/*
+            <Card>
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
               <CardDescription>
@@ -87,6 +91,8 @@ export default function AccountPage() {
               <Button>Save Changes</Button>
             </CardFooter>
           </Card>
+          */}
+          <ProfilePage userData= {userData} />
         </TabsContent>
 
         <TabsContent value="orders" className="mt-6">

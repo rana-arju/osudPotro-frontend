@@ -2,6 +2,7 @@
 "use server";
 
 import { jwtDecode } from "jwt-decode";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -23,6 +24,8 @@ export const registerUser = async (userData: FieldValues) => {
       storeCokies.set("accessToken", result.data.accessToken);
       storeCokies.set("refreshToken", result.data.refreshToken);
     }
+    revalidateTag("auth");
+
     return result;
   } catch (error: any) {
     return Error(error);
@@ -46,7 +49,30 @@ export const loginUser = async (userData: FieldValues) => {
       storeCokies.set("accessToken", result.data.accessToken);
       storeCokies.set("refreshToken", result.data.refreshToken);
     }
+    revalidateTag("auth");
+
     return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const updateProfile = async (userData: FieldValues) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/profile`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+    
+    revalidateTag("auth");
+
+    return res.json();
   } catch (error: any) {
     return Error(error);
   }
@@ -63,7 +89,6 @@ export const getCurrentUser = async () => {
   }
 };
 
-
 export const logout = async () => {
   (await cookies()).delete("accessToken");
 };
@@ -79,10 +104,27 @@ export const getNewToken = async () => {
         },
       }
     );
-    
-  
+    revalidateTag("auth");
+
     return res.json();
   } catch (error: any) {
-    return Error(error);
+    throw new Error(error);
+  }
+};
+export const getMe = async () => {
+  try {
+    console.log(" (await cookies())",  (await cookies())?.get("refreshToken")!.value);
+    
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies())?.get("accessToken")!.value,
+      },
+    });
+
+    return res.json();
+  } catch (error: any) {
+    throw new Error(error);
   }
 };

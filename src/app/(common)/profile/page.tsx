@@ -17,34 +17,47 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { updateProfile } from "@/services/AuthService";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number is required"),
-  address: z.string().min(5, "Address is required"),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
-export default function ProfilePage() {
+export default function ProfilePage({ userData }: any) {
   const [isEditing, setIsEditing] = useState(false);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "1234567890",
-      address: "123 Main St, New York, NY 10001",
+      name: userData?.name || "",
+      email: userData?.email || "",
+      phone: userData?.phone || "",
+      address: userData?.address || "",
+      city: userData?.city || "",
     },
   });
 
-  function onSubmit(values: ProfileFormValues) {
+  async function onSubmit(values: ProfileFormValues) {
     console.log(values);
     // Handle profile update logic here
-    setIsEditing(false);
-    toast("Your profile has been successfully updated.");
+    try {
+      const res = await updateProfile(values);
+      if (res.success) {
+        setIsEditing(false);
+        toast.success(res?.message);
+       
+      } else {
+        toast.error(res?.message);
+      }
+    } catch {
+      toast.error("Profile update failed. try again");
+    }
   }
 
   return (
@@ -64,7 +77,11 @@ export default function ProfilePage() {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={!isEditing} />
+                      <Input
+                        {...field}
+                        disabled={!isEditing}
+                        placeholder="Enter Full Name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -77,7 +94,7 @@ export default function ProfilePage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={!isEditing} />
+                      <Input {...field} disabled={true} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -90,7 +107,28 @@ export default function ProfilePage() {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={!isEditing} />
+                      <Input
+                        {...field}
+                        disabled={!isEditing}
+                        placeholder="Enter Phone number"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={!isEditing}
+                        placeholder="Enter City name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,25 +141,37 @@ export default function ProfilePage() {
                   <FormItem>
                     <FormLabel>Address</FormLabel>
                     <FormControl>
-                      <Textarea {...field} disabled={!isEditing} />
+                      <Textarea
+                        {...field}
+                        disabled={!isEditing}
+                        placeholder="Enter full address"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               {isEditing ? (
                 <div className="flex justify-end space-x-2">
-                  <Button type="submit">Save Changes</Button>
+                  <Button type="submit" className="cursor-pointer">
+                    Save Changes
+                  </Button>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsEditing(false)}
+                    className="cursor-pointer"
                   >
                     Cancel
                   </Button>
                 </div>
               ) : (
-                <Button type="button" onClick={() => setIsEditing(true)}>
+                <Button
+                  type="button"
+                  onClick={() => setIsEditing(true)}
+                  className="cursor-pointer"
+                >
                   Edit Profile
                 </Button>
               )}
