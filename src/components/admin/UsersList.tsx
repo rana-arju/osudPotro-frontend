@@ -11,14 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,43 +21,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, MoreHorizontal, Search } from "lucide-react";
+import { MoreHorizontal, Search } from "lucide-react";
 import { toast } from "sonner";
-import { updateRole, updateStatus } from "@/services/AuthService";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: "customer" | "admin";
-  status: "in-progress" | "blocked";
-  orderCount: number;
-}
-
-interface Order {
-  id: string;
-  date: string;
-  total: number;
-  status: string;
-}
+import { deleteUser, updateRole, updateStatus } from "@/services/AuthService";
+import { useRouter } from "next/navigation";
 
 export default function UsersList({ users }: any) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [userOrders, setUserOrders] = useState<Order[]>([]);
-
-  const fetchUserOrders = async (userId: string) => {
-    try {
-      // Replace this with your actual API call
-      const response = await fetch(`/api/users/${userId}/orders`);
-      const data = await response.json();
-      setUserOrders(data);
-    } catch (error) {
-      console.error("Failed to fetch user orders:", error);
-      toast.error("Failed to fetch user orders");
-    }
-  };
+  const router = useRouter();
 
   const handleRoleChange = async (
     userId: string,
@@ -89,7 +53,7 @@ export default function UsersList({ users }: any) {
     newStatus: "in-progress" | "blocked"
   ) => {
     console.log("user status", newStatus);
-    
+
     try {
       const res = await updateStatus(userId, newStatus);
       if (res?.success) {
@@ -101,15 +65,18 @@ export default function UsersList({ users }: any) {
       toast.error("Failed to update user status");
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-  console.log("users", users);
+  const handleUserDelete = async (userId: string) => {
+    try {
+      const res = await deleteUser(userId);
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch {
+      toast.error("Failed to delete user");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -170,10 +137,7 @@ export default function UsersList({ users }: any) {
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => {
-                          setSelectedUser(user);
-                          fetchUserOrders(user.id);
-                        }}
+                        onClick={() => router.push(`/admin/users/${user?._id}`)}
                       >
                         View Details
                       </DropdownMenuItem>
@@ -206,6 +170,14 @@ export default function UsersList({ users }: any) {
                           ? "blocked"
                           : "In-Progress"}
                       </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => handleUserDelete(user._id)}
+                      >
+                        <p className="text-red-500 hover:text-white font-bold capitalize">
+                          Delete user
+                        </p>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
@@ -214,43 +186,6 @@ export default function UsersList({ users }: any) {
           </TableBody>
         </Table>
       </div>
-
-      <Dialog>
-        <DialogTrigger asChild>
-          <span className="hidden">Open Dialog</span>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>User Details</DialogTitle>
-            <DialogDescription>
-              View user information and order history
-            </DialogDescription>
-          </DialogHeader>
-          {selectedUser && (
-            <div className="py-4">
-              <h3 className="font-semibold mb-2">{selectedUser.name}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                {selectedUser.email}
-              </p>
-              <h4 className="font-semibold mb-2">Order History</h4>
-              {userOrders.length > 0 ? (
-                <ul className="space-y-2">
-                  {userOrders.map((order) => (
-                    <li key={order.id} className="text-sm">
-                      <span className="font-medium">{order.date}</span> - $
-                      {order.total.toFixed(2)} ({order.status})
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  No orders found
-                </p>
-              )}
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
