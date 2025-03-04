@@ -1,0 +1,7 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "4294967294",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(adminDashboard)/layout,_N_T_/(adminDashboard)/admin/layout,_N_T_/(adminDashboard)/admin/medicines/layout,_N_T_/(adminDashboard)/admin/medicines/add/layout,_N_T_/(adminDashboard)/admin/medicines/add/page,_N_T_/admin/medicines/add,Category,Manufacturer"
+  }
+}

@@ -1,4 +1,5 @@
 "use client";
+import MedicineLoader from "@/components/loader";
 import { getCurrentUser } from "@/services/AuthService";
 import { IUser } from "@/types/User";
 import {
@@ -31,7 +32,11 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     handleUser();
   }, [isLoading]);
   if (isLoading) {
-    return <p>Loading...</p>
+    return (
+      <div className="h-screen flex items-center justify-center bg-gray-50">
+        <MedicineLoader />
+      </div>
+    );
   }
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
