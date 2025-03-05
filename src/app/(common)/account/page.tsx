@@ -6,15 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditCard, Package, User } from "lucide-react";
+import { CreditCard, Package,  User } from "lucide-react";
 import { getMe } from "@/services/AuthService";
 import Profile from "@/components/auth/Profile";
-export const dynamic = "force-dynamic"; 
+import { myOrder } from "@/services/order";
+import MyOrders from "@/components/MyOrders";
+
+export const dynamic = "force-dynamic";
 export default async function AccountPage() {
   const res = await getMe();
-  const userData = res?.data
+  const response = await myOrder();
+  const myOrders = response?.data;
+  const userData = res?.data;
 
   return (
     <div className="w-full md:max-w-4xl mx-auto">
@@ -46,61 +50,6 @@ export default async function AccountPage() {
         </TabsList>
 
         <TabsContent value="profile" className="mt-6">
-          {/*
-            <Card>
-            <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
-              <CardDescription>
-                Update your personal details here.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" defaultValue="John" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" defaultValue="Doe" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  defaultValue="john.doe@example.com"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" defaultValue="+1 (555) 123-4567" />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
-                <Input id="address" defaultValue="123 Main St" />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="city">City</Label>
-                  <Input id="city" defaultValue="New York" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="zipCode">ZIP Code</Label>
-                  <Input id="zipCode" defaultValue="10001" />
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save Changes</Button>
-            </CardFooter>
-          </Card>
-          */}
           <Profile userData={userData} />
         </TabsContent>
 
@@ -113,46 +62,7 @@ export default async function AccountPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {[
-                  {
-                    id: "ORD-12345",
-                    date: "Feb 15, 2024",
-                    status: "Delivered",
-                    total: "$34.97",
-                  },
-                  {
-                    id: "ORD-12344",
-                    date: "Jan 28, 2024",
-                    status: "Delivered",
-                    total: "$62.98",
-                  },
-                  {
-                    id: "ORD-12343",
-                    date: "Jan 10, 2024",
-                    status: "Delivered",
-                    total: "$15.99",
-                  },
-                ].map((order) => (
-                  <div
-                    key={order.id}
-                    className="flex justify-between items-center p-4 border rounded-lg"
-                  >
-                    <div>
-                      <h3 className="font-medium">{order.id}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {order.date}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
-                        {order.status}
-                      </span>
-                      <p className="font-medium mt-1">{order.total}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <MyOrders myOrders={myOrders} />
             </CardContent>
           </Card>
         </TabsContent>

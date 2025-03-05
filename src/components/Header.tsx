@@ -259,7 +259,7 @@ export default function Header() {
                 type="search"
                 placeholder="Search medicines, products..."
                 className={cn(
-                  "w-full pl-8",
+                  "w-full pl-8 border-2 border-primary",
                   isSearchOpen ? "block" : "hidden md:block"
                 )}
               />
