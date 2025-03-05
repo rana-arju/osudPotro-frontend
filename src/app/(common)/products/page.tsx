@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getAllMedicine } from "@/services/medicine";
+import { IProduct } from "@/types/Product";
 
 export default async function ProductsPage() {
 
@@ -91,7 +92,7 @@ const products = productsData?.data;
         </div>
         {products?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products?.map((product: any) => (
+            {products?.map((product: IProduct) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>

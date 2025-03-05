@@ -1,21 +1,20 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { addCart } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
 
-interface ProductCardProps {
-  product: {
-    _id: number;
-    name: string;
-    description: string;
-    price: number;
-    images: string;
-    category?: string;
-    rating?: number;
+export default function ProductCard({ product }: any) {
+  console.log("product");
+
+  const dispatch = useAppDispatch();
+  const handleAddCart = () => {
+    dispatch(addCart(product));
+    toast.success("Add to cart Successfull")
   };
-}
-
-export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-lg border bg-card transition-all hover:shadow-md">
       <Link href={`/products/${product._id}`} className="absolute inset-0 z-10">
@@ -36,12 +35,15 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <div className="p-4">
-        <h3 className="font-medium text-card-foreground">{product.name}</h3>
+        <h3 className="font-medium text-card-foreground line-clamp-2">
+          {product.name}
+        </h3>
+        
         <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
           {product.description}
         </p>
 
-  { /*     {product.rating && (
+        {/*     {product.rating && (
           <div className="mt-2 flex items-center">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
@@ -82,7 +84,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Button
             size="sm"
             variant="ghost"
-            className="z-20 relative text-primary hover:text-primary-foreground hover:bg-primary"
+            className="z-20 relative text-primary hover:text-primary-foreground hover:bg-primary cursor-pointer"
+            onClick={handleAddCart}
           >
             <ShoppingCart className="h-4 w-4" />
             <span className="sr-only">Add to cart</span>

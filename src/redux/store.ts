@@ -10,17 +10,17 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import cartReducer from "./features/cartSlice";
 const persistOptions = {
   key: "cart",
   storage,
 };
-//const persistedCart = persistReducer(persistOptions, cartReducer);
+const persistedCart = persistReducer(persistOptions, cartReducer);
 
 export const store = () => {
   return configureStore({
     reducer: {
-   
+      cart: persistedCart,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

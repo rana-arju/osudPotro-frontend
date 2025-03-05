@@ -127,16 +127,16 @@
       "namedRegex": "^/cart(?:/)?$"
     },
     {
-      "page": "/checkout",
-      "regex": "^/checkout(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/checkout(?:/)?$"
-    },
-    {
       "page": "/favicon.ico",
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/orderDetails",
+      "regex": "^/orderDetails(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/orderDetails(?:/)?$"
     },
     {
       "page": "/orders",
@@ -149,6 +149,12 @@
       "regex": "^/products(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/products(?:/)?$"
+    },
+    {
+      "page": "/verify-order",
+      "regex": "^/verify\\-order(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/verify\\-order(?:/)?$"
     }
   ],
   "dataRoutes": [],
