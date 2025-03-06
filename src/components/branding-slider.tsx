@@ -60,7 +60,7 @@ export function BrandingSlider() {
 
   return (
     <section className="py-12 bg-muted">
-      <div className="container px-4 md:px-6">
+      <div className="px-4 md:px-6">
         <h2 className="text-2xl font-bold text-center mb-8">
           Trusted by Leading Brands
         </h2>

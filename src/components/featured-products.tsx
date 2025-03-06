@@ -10,7 +10,7 @@ export default async function FeaturedProducts() {
 
   return (
     <section className="py-8">
-      <div className="container">
+      <div >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold tracking-tight">
             Featured Products

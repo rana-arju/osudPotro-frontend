@@ -19,8 +19,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   
-  
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -31,9 +29,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-              <main>
-                {children}
-              </main>
+            <main className="custom-container mx-auto flex-1 px-1 md:px-4 py-6">
+              {children}
+            </main>
             <Toaster richColors position="top-center" />
           </ThemeProvider>
         </Providers>

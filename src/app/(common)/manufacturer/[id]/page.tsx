@@ -9,7 +9,7 @@ const Manufacturer = async ({ params }: any) => {
   const manufacturer = res?.data
 
   return (
-    <div className="container mx-auto py-2 md:py-8 px-2 md:px-4">
+    <div className="py-2 md:py-8 px-2 md:px-4">
       <h1 className="text-3xl font-bold text-center mb-6">
         Available Medicines
       </h1>

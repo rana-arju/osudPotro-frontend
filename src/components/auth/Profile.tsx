@@ -59,7 +59,7 @@ export default function Profile({ userData }: any) {
   }
 
   return (
-    <div className="container mx-auto px-2 md:px-4 py-8">
+    <div className="px-2 md:px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">My Profile</h1>
       <Card>
         <CardHeader>

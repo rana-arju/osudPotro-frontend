@@ -58,7 +58,7 @@ export default function VerifyOrderPage() {
 
 
   return (
-    <div className="container mx-auto pt-16 px-4">
+    <div className="pt-16 px-4">
       <h1 className="text-2xl font-bold mb-6">Order Verification</h1>
 
       <div className="grid gap-6 md:grid-cols-2">

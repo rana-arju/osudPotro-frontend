@@ -45,7 +45,7 @@ export default function UserOrders({ userOrders }: any) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" px-4 py-8">
       <div className="flex items-center mb-6">
         <Link href="/admin/users">
           <Button variant="ghost" className="mr-4">

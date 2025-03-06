@@ -37,7 +37,7 @@ export default function OrderDetails({ details }: any) {
   }
 
   return (
-    <div className="container mx-auto p-1 md:p-6 space-y-6">
+    <div className=" p-1 md:p-6 space-y-6">
       <h1 className="text-2xl font-bold text-center">Order Details</h1>
       {details && (
         <Card key={details._id} className="p-4 space-y-6">

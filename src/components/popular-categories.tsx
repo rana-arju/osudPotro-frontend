@@ -147,7 +147,7 @@ export default function PopularCategories() {
 
   return (
     <section className="py-8">
-      <div className="container px-4 md:px-6">
+      <div className=" px-4 md:px-6">
         <h2 className="text-2xl font-bold tracking-tight mb-6">
           Popular Categories
         </h2>

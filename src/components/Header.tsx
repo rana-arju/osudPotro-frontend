@@ -11,10 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import {  ShoppingCart, User, Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -31,6 +30,7 @@ import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/AuthService";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { SearchBar } from "./search-bar";
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function Header() {
 
   return (
     <header className="sticky  top-0 z-50 w-full border-b bg-primary text-primary backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center">
+      <div className=" custom-container px-2 sm:px-6 lg:px-8 flex h-16 items-center">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -58,22 +58,12 @@ export default function Header() {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-primary"
-                >
-                  <path d="m12 14 4-4" />
-                  <path d="M3.34 17a10 10 0 1 1 17.32 0" />
-                </svg>
-                MediShop
+                <Image
+                  src="https://cdn.osudpotro.com/appImage/web-osudpotro-logo.png?w=256"
+                  width={100}
+                  height={100}
+                  alt="OsudPotro"
+                />
               </Link>
               <Link href="/" className="hover:text-primary">
                 Home
@@ -242,38 +232,14 @@ export default function Header() {
         </NavigationMenu>
 
         <div className="ml-auto flex items-center gap-2">
-          <div
+          <SearchBar
+            isSearchOpen={isSearchOpen}
+            onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
             className={cn(
               "flex items-center",
               isSearchOpen ? "w-full md:w-80" : "w-0 md:w-80"
             )}
-          >
-            <div
-              className={cn(
-                "relative w-full transition-all duration-300 ease-in-out",
-                isSearchOpen ? "opacity-100" : "opacity-0 md:opacity-100"
-              )}
-            >
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search medicines, products..."
-                className={cn(
-                  "w-full pl-8 border-2 border-primary",
-                  isSearchOpen ? "block" : "hidden md:block"
-                )}
-              />
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-            >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
-          </div>
+          />
 
           <Button variant="ghost" size="icon" asChild>
             <Link href="/cart">

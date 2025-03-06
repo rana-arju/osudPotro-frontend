@@ -79,7 +79,7 @@ export default function UsersList({ users }: any) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Manage Users</h1>
       <div className="mb-4 flex items-center">
         <Input

@@ -48,7 +48,7 @@ export default function Cart() {
         <div className="md:col-span-2 space-y-6">
           {orderMedicines.length > 0 ? (
             <>
-              {orderMedicines.map((item) => (
+              {orderMedicines.map((item: any) => (
                 <div key={item._id} className="flex gap-4 py-4 border-b">
                   <div className="w-24 h-24 bg-background rounded-md overflow-hidden flex-shrink-0">
                     <Image

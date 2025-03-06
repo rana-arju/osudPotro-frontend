@@ -19,7 +19,7 @@ export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("login");
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="px-4 py-8">
       <div className="flex flex-col md:flex-row items-center justify-center gap-8">
         <Card className="w-full md:w-1/2 max-w-md">
           <CardHeader>
