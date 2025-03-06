@@ -53,7 +53,6 @@ export default function Categories({ categories }: { categories: Category[] }) {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
-      _id: editingCategoryId!,
     },
   });
 
@@ -73,7 +72,8 @@ export default function Categories({ categories }: { categories: Category[] }) {
     }
   };
 
-  const handleAddCategory = async (values: Category) => {
+  const handleAddCategory = async (values: Partial<Category>) => {
+   
     try {
       const response = await createCategory(values);
       if (response?.success) {
@@ -90,8 +90,6 @@ export default function Categories({ categories }: { categories: Category[] }) {
   const handleUpdateCategory = async (values: Category) => {
     if (!editingCategoryId) return;
     try {
-      
-
       const response = await updateCategory(editingCategoryId, values);
       if (response?.success) {
         toast.success(response.message);

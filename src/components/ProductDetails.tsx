@@ -17,7 +17,7 @@ export default function ProductDetails({ product }: any) {
     toast.success("Add to cart Successfull");
   };
   return (
-    <div>
+    <div className="min-h-screen mb-10">
       <Link href="/products" className="flex items-center text-primary mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Products

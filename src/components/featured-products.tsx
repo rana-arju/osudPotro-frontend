@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default async function FeaturedProducts() {
   // Mock featured products data
- const res =await getAllMedicine();
+ const res =await getAllMedicine({});
  const featuredProducts = res?.data;
 
   return (
@@ -21,7 +21,7 @@ export default async function FeaturedProducts() {
         </div>
         {featuredProducts?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featuredProducts?.map((product: any) => (
+            {featuredProducts?.slice(0,8).map((product: any) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>

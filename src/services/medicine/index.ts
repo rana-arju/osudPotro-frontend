@@ -1,5 +1,6 @@
 "use server";
 
+import axios from "axios";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
@@ -21,15 +22,29 @@ export const createMedicine = async (data: any) => {
     return new Error(error.message || "Unknown error");
   }
 };
-export const getAllMedicine = async () => {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/medicine`, {
-      next: {
-        tags: ["medicine"],
-      },
-    });
 
-    return res.json();
+export const getAllMedicine = async (params: Record<string, unknown>) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/medicine`,
+      {
+        params: {
+          ...params,
+          searchTerm: params.searchTerm || undefined,
+          category: params.category || undefined,
+          minPrice: params.minPrice || undefined,
+          maxPrice: params.maxPrice || undefined,
+          prescription: params.prescription || undefined,
+          availability: params.availability || undefined,
+          sort: params.sort || undefined,
+          page: params.page || 1,
+          limit: params.limit || 10,
+        },
+      }
+    );
+    
+
+    return response.data;
   } catch (error: any) {
     return new Error(error.message || "Unknown error");
   }

@@ -33,7 +33,6 @@ export default function OrderDetails({ details }: any) {
       </div>
     );
   }
-  console.log("details.transaction.date_time", details);
 
   return (
     <div className=" p-1 md:p-6 space-y-6">
