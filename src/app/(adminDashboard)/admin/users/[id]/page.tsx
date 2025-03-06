@@ -1,12 +1,11 @@
-import UserOrders from '@/components/admin/UserOrders'
-import { getUserOrders } from '@/services/AuthService'
-import React from 'react'
+import UserOrders from "@/components/admin/UserOrders";
+import { getUserOrders } from "@/services/AuthService";
+import React from "react";
 
-async function UserOrdersPage({params}: any) {
-    const {id} = await params;
-    const res = await getUserOrders(id);
-    const userOrders = res.data;
-
+async function UserOrdersPage({ params }: any) {
+  const { id } = await params;
+  const res = await getUserOrders(id);
+  const userOrders = res.data;
   return (
     <div>
       <UserOrders userOrders={userOrders} />
@@ -14,4 +13,4 @@ async function UserOrdersPage({params}: any) {
   );
 }
 
-export default UserOrdersPage
+export default UserOrdersPage;

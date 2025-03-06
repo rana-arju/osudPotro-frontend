@@ -7,10 +7,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 
 export default function OrderDetails({ details }: any) {
- 
-    
   const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
       case "pending":
         return "orange-500";
       case "paid":
@@ -18,10 +16,10 @@ export default function OrderDetails({ details }: any) {
       case "completed":
         return "green-500";
       case "cancelled":
-        return "red-500"; 
-    case "success":
-        return "primary"; 
-    case "shipped":
+        return "red-500";
+      case "success":
+        return "primary";
+      case "shipped":
         return "primary";
       default:
         return "gray-500";
@@ -35,6 +33,7 @@ export default function OrderDetails({ details }: any) {
       </div>
     );
   }
+  console.log("details.transaction.date_time", details);
 
   return (
     <div className=" p-1 md:p-6 space-y-6">
@@ -58,7 +57,7 @@ export default function OrderDetails({ details }: any) {
               </p>
               <p>
                 <strong>Order Date:</strong>{" "}
-                {format(new Date(details.transaction.date_time), "PPpp")}
+                {format(new Date(details.createdAt), "PPpp")}
               </p>
             </div>
 
@@ -67,7 +66,9 @@ export default function OrderDetails({ details }: any) {
               <h2 className="font-semibold text-lg mb-2">
                 Transaction Details
               </h2>
-              {details.transaction ? (
+              {details?.transaction?.transactionStatus === "Initiated" ? (
+                "Not Payment"
+              ) : details.transaction ? (
                 <>
                   <p>
                     <strong>Transaction ID:</strong> {details.transaction.id}
@@ -77,7 +78,7 @@ export default function OrderDetails({ details }: any) {
                     {details.transaction.method || "N/A"}
                   </p>
                   <p>
-                    <strong>Status:</strong>{" "}
+                    <strong>Status:</strong>
                     <Badge
                       variant="outline"
                       className={`text-white bg-${getStatusColor(

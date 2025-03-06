@@ -21,10 +21,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Search } from "lucide-react";
+import { ExternalLink, MoreHorizontal, Search } from "lucide-react";
 import { toast } from "sonner";
 import { deleteUser, updateRole, updateStatus } from "@/services/AuthService";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function UsersList({ users }: any) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,7 +125,12 @@ export default function UsersList({ users }: any) {
                     {user.status}
                   </Badge>
                 </TableCell>
-                <TableCell>{user.orderCount}</TableCell>
+                <TableCell>
+                  <Link href={`/admin/users/${user._id}`}>
+                    {" "}
+                    <ExternalLink />
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

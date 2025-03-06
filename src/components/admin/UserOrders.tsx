@@ -52,9 +52,6 @@ export default function UserOrders({ userOrders }: any) {
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Users
           </Button>
         </Link>
-        {
-          // <h1 className="text-3xl font-bold">Orders for {user?.name}</h1>
-        }
       </div>
 
       {userOrders?.length === 0 ? (
@@ -72,39 +69,49 @@ export default function UserOrders({ userOrders }: any) {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {userOrders?.map((order: any) => (
-            <Card key={order.id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                  Order #{order.id}
-                  <Badge
-                    className={`${getStatusColor(order.status)} text-white`}
-                  >
-                    {order.status}
-                  </Badge>
-                </CardTitle>
-                <CardDescription>
-                  {new Date(order.date).toLocaleDateString()}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-2">
-                  {order.items.map((item: any) => (
-                    <li key={item.id} className="flex justify-between">
-                      <span>
-                        {item.name} x{item.quantity}
-                      </span>
-                      <span>${(item.price * item.quantity).toFixed(2)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter className="bg-muted">
-                <div className="w-full flex justify-between items-center">
-                  <span className="font-semibold">Total:</span>
-                  <span className="font-bold">${order.total.toFixed(2)}</span>
-                </div>
-              </CardFooter>
-            </Card>
+            <Link href={`/orderDetails/${order?.transaction?.id}`} key={order._id}>
+              <Card className="flex flex-col">
+                <CardHeader>
+                  <CardTitle className="flex justify-between items-center">
+                    Order #
+                    <Badge
+                      className={`${getStatusColor(order.status)} text-white`}
+                    >
+                      {order.status}
+                    </Badge>
+                  </CardTitle>
+                  <CardDescription>
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <ul className="space-y-2">
+                    {order?.medicines?.map((item: any) => (
+                      <li
+                        key={item.medicine._id}
+                        className="flex justify-between"
+                      >
+                        <span>
+                          {item.medicine.name.slice(0, 10) + "..."} x
+                          {item.quantity}
+                        </span>
+                        <span>
+                          ${(item.medicine.price * item.quantity).toFixed(2)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter className="bg-muted">
+                  <div className="w-full flex justify-between items-center">
+                    <span className="font-semibold">Total:</span>
+                    <span className="font-bold">
+                      ${order.totalPrice.toFixed(2)}
+                    </span>
+                  </div>
+                </CardFooter>
+              </Card>
+            </Link>
           ))}
         </div>
       )}

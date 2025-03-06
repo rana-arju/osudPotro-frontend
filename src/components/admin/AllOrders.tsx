@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/select";
 import { orderStatusChange } from "@/services/order";
 import { toast } from "sonner";
-import { Download, Loader2 } from "lucide-react";
+import { Download, ExternalLink, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function AllOrders({ orders }: any) {
   const [downloadingOrderId, setDownloadingOrderId] = useState<string | null>(
@@ -74,6 +75,7 @@ export default function AllOrders({ orders }: any) {
             <TableHead>Status</TableHead>
             <TableHead>Prescription</TableHead>
             <TableHead>Actions</TableHead>
+            <TableHead>More</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,6 +92,17 @@ export default function AllOrders({ orders }: any) {
                 </Badge>
               </TableCell>
               <TableCell>
+                {order?.medicines?.map((medicine: any) => (
+                  <Badge key={medicine.medicine._id} variant="destructive">
+                    {medicine.medicine.prescription}
+                  </Badge>
+                )) ? (
+                  <Badge variant="destructive">Required</Badge>
+                ) : (
+                  <Badge variant="outline">Not Required</Badge>
+                )}
+              </TableCell>
+              <TableCell className="flex gap-2 justify-between items-center">
                 {order.prescriptionImage ? (
                   <div className="flex items-center space-x-2">
                     <Button
@@ -117,18 +130,11 @@ export default function AllOrders({ orders }: any) {
                 ) : (
                   <Badge variant="outline">No found</Badge>
                 )}
+                <Link href={`/orderDetails/${order?.transaction?.id}`}>
+                  <ExternalLink />
+                </Link>
               </TableCell>
-              <TableCell>
-                {order?.medicines?.map((medicine: any) => (
-                  <Badge key={medicine.medicine._id} variant="destructive">
-                    {medicine.medicine.prescription}
-                  </Badge>
-                )) ? (
-                  <Badge variant="destructive">Required</Badge>
-                ) : (
-                  <Badge variant="outline">Not Required</Badge>
-                )}
-              </TableCell>
+
               <TableCell>
                 <Select
                   value={order.status}
