@@ -22,7 +22,7 @@ export default async function AccountPage() {
 
   return (
     <div className="w-full md:max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">My Account</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">My Account</h1>
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="grid w-full grid-cols-3">

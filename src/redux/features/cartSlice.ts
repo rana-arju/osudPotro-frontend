@@ -118,6 +118,9 @@ export const shippingCostSelector = (state: RootState) => {
 export const citySelector = (state: RootState) => {
   return state.cart.city;
 };
+export const findRequiredPrescription = (state: RootState) => {
+  return state.cart.items.some(item => item.prescription === "Yes")
+};
 
 export const shippingAddressSelector = (state: RootState) => {
   return state.cart.address;

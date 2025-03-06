@@ -71,7 +71,7 @@ export default function Manufacturers({ manufacturers }: any) {
         }
       } else {
         const res = await createManufacturer(values);
-        console.log(res);
+        
 
         if (res.success) {
           toast.success(res?.message);
@@ -186,7 +186,7 @@ export default function Manufacturers({ manufacturers }: any) {
               manufacturers.map((manufacturer: any) => (
                 <TableRow key={manufacturer._id}>
                   <TableCell>{manufacturer.name}</TableCell>
-                  <TableCell>{manufacturer.description}</TableCell>
+                  <TableCell className="line-clamp-2 max-w-48">{manufacturer.description}</TableCell>
                   <TableCell>
                     <Button
                       variant="outline"

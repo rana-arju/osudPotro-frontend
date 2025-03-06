@@ -6,6 +6,7 @@ import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
   citySelector,
   clearCart,
+  findRequiredPrescription,
   grandTotalSelector,
   orderedProductsSelector,
   orderSelector,
@@ -19,7 +20,7 @@ import { placeOrder } from "@/services/cart";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function PaymentDetails({ userData }: any) {
+export default function PaymentDetails({ userData, imageUrls }: any) {
   const subTotal = useAppSelector(subTotalSelector);
   const shippingCost = useAppSelector(shippingCostSelector);
   const grandTotal = useAppSelector(grandTotalSelector);
@@ -28,7 +29,7 @@ export default function PaymentDetails({ userData }: any) {
   const shippingAddress = useAppSelector(shippingAddressSelector);
   const cartProducts = useAppSelector(orderedProductsSelector);
   const phoneSelect = useAppSelector(phoneSelector);
-
+  const prescriptionRequired = useAppSelector(findRequiredPrescription);
   const user = useUser();
 
   const router = useRouter();
@@ -63,9 +64,10 @@ export default function PaymentDetails({ userData }: any) {
       order.shippingInfo.phone = phone;
       order.shippingInfo.city = city;
       order.shippingInfo.address = address;
-        console.log("order", order);
 
-      const res = await placeOrder(order);
+
+      const res = await placeOrder({ ...order, prescriptionImage: imageUrls[0] });
+      
 
       if (res?.success) {
         toast.success(res.message, { id: orderLoading });
@@ -76,13 +78,11 @@ export default function PaymentDetails({ userData }: any) {
           }, 1000);
           return () => clearTimeout(timer);
         }
-      }
-
-      if (!res.success) {
+      } else {
         toast.error(res.message, { id: orderLoading });
       }
-    } catch (error: any) {
-      toast.error(error.message, { id: orderLoading });
+    } catch {
+      toast.error("Order place failed. Try again", { id: orderLoading });
     }
   };
 
@@ -106,12 +106,20 @@ export default function PaymentDetails({ userData }: any) {
         <p className="font-semibold">{currencyFormatter(grandTotal)}</p>
       </div>
 
-      <Button
-        onClick={handleOrder}
-        className="w-full text-xl font-semibold py-5 cursor-pointer"
-      >
-        Order Now
-      </Button>
+      <div className="relative group w-full">
+        <Button
+          onClick={handleOrder}
+          className="w-full text-xl font-semibold py-5 cursor-pointer"
+          disabled={prescriptionRequired ? imageUrls.length === 0 : false}
+        >
+          Order Now
+        </Button>
+        {prescriptionRequired && imageUrls.length === 0 && (
+          <div className="absolute left-1/2 -top-10 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            Please upload prescription to continue
+          </div>
+        )}
+      </div>
     </div>
   );
 }

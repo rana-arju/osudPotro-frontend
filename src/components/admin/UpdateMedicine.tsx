@@ -261,7 +261,7 @@ export default function EditMedicine({ categories, manufacturers }: any) {
               control={form.control}
               name={name as keyof Medicine}
               render={({ field }) => {
-                console.log("field asdfa", field);
+               
 
                 return (
                   <FormItem>

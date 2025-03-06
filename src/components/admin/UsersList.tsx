@@ -34,7 +34,7 @@ export default function UsersList({ users }: any) {
     userId: string,
     newRole: "customer" | "admin"
   ) => {
-    console.log("newrole", userId);
+    
 
     try {
       const res = await updateRole(userId, newRole);

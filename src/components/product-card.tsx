@@ -8,7 +8,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 
 export default function ProductCard({ product }: any) {
-  console.log("product");
+ 
 
   const dispatch = useAppDispatch();
   const handleAddCart = () => {

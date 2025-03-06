@@ -90,7 +90,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
   const handleUpdateCategory = async (values: Category) => {
     if (!editingCategoryId) return;
     try {
-      console.log("afsdfaf", values);
+      
 
       const response = await updateCategory(editingCategoryId, values);
       if (response?.success) {

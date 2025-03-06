@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addCart } from "@/redux/features/cartSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { Star, Truck, ShieldCheck, ArrowLeft } from "lucide-react";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -58,8 +59,8 @@ export default function ProductDetails({ product }: any) {
           <div>
             <span className="text-3xl font-bold">${product.price}</span>
             <p className="text-sm text-muted-foreground mt-1">
-              {product.stock > 0
-                ? `In Stock (${product.stock} available)`
+              {product.quantity > 0
+                ? `In Stock (${product.quantity} available)`
                 : "Out of Stock"}
             </p>
           </div>
@@ -72,7 +73,8 @@ export default function ProductDetails({ product }: any) {
               <strong>Form:</strong> {product.type}
             </p>
             <p>
-              <strong>Quantity:</strong> {product.quantity}
+              <strong>Expire in:</strong>{" "}
+              {moment(product.expiryDate).format("LL")}
             </p>
             <Link
               href={`/manufacturer/${product.manufacturer._id}`}

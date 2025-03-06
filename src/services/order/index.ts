@@ -46,6 +46,24 @@ export const myOrder = async () => {
     return new Error(error.message || "Unknown error");
   }
 };
+export const getAllOrder = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/order`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies())?.get("accessToken")!.value,
+      },
+      next: {
+        tags: ["order"],
+      },
+    });
+
+    return res.json();
+  } catch (error: any) {
+    return new Error(error.message || "Unknown error");
+  }
+};
 export const deleteOrder = async (id: string) => {
   try {
     const res = await fetch(
@@ -56,6 +74,27 @@ export const deleteOrder = async (id: string) => {
           "Content-Type": "application/json",
           Authorization: (await cookies())?.get("accessToken")!.value,
         },
+      }
+    );
+    revalidateTag("order");
+    return res.json();
+  } catch (error: any) {
+    return new Error(error.message || "Unknown error");
+  }
+};
+export const orderStatusChange = async (id: string, status: string) => {
+  try {
+    console.log(status);
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/order/status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+        body: JSON.stringify({ status }),
       }
     );
     revalidateTag("order");

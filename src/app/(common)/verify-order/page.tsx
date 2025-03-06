@@ -55,7 +55,7 @@ export default function VerifyOrderPage() {
 
     fetchOrder();
   }, [orderId]);
-  console.log("orderData", orderData);
+
 
   return (
     <div className="container mx-auto pt-16 px-4">

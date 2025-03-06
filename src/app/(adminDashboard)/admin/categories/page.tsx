@@ -4,7 +4,7 @@ import React from 'react'
 
 const CategoryPage = async() => {
   const categories = await getAllCategory();
-  console.log(categories);
+ 
   
 
   return (

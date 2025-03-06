@@ -1,11 +1,13 @@
 "use client";
 import Address from "@/components/Address";
+import ImageUpload from "@/components/imageUpload";
 import PaymentDetails from "@/components/PaymentDetails";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   clearCart,
   decrementOrderQuantity,
+  findRequiredPrescription,
   incrementOrderQuantity,
   orderedProductsSelector,
   removeFromCart,
@@ -21,21 +23,20 @@ import { toast } from "sonner";
 
 export default function CartPage() {
   const [user, setUser] = useState<IUser | null>(null);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const orderMedicines = useAppSelector(orderedProductsSelector);
-
+  const prescriptionRequired = useAppSelector(
+    findRequiredPrescription
+  );
+  const handleUploadComplete = (urls: string[]) => setImageUrls(urls);
   const handleRemoveItem = (id: string) => {
     dispatch(removeFromCart(id));
     toast.success("Remove one Medicine from cart");
   };
-  /*
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const shipping = 4.99;
-  const total = subtotal + shipping;
-*/
+
+
+
   useEffect(() => {
     const getUser = async () => {
       const res = await getMe();
@@ -44,8 +45,7 @@ export default function CartPage() {
     };
     getUser();
   }, []);
-  console.log("user", user);
-  
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -156,8 +156,16 @@ export default function CartPage() {
           </div>
 
           <Separator className="my-4" />
+          {prescriptionRequired && (
+            <>
+              <label className="capitalize ">Upload Prescription</label>
+              <ImageUpload onUploadComplete={handleUploadComplete} />
+            </>
+          )}
 
-          <PaymentDetails userData={user} />
+          <Separator className="my-4" />
+
+          <PaymentDetails userData={user} imageUrls={imageUrls} />
         </div>
       </div>
     </div>
