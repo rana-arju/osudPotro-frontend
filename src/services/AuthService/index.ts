@@ -97,7 +97,7 @@ export const deleteUser = async (id: string) => {
   }
 };
 export const updateRole = async (id: string, role: string) => {
-  console.log("servoce", role);
+ 
 
   try {
     const res = await fetch(

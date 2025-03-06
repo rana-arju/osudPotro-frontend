@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 export const createManufacturer = async (data: any) => {
   try {
-    console.log("rana", JSON.stringify(data));
+   
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/manufacturer`,

@@ -64,6 +64,29 @@ export const getAllOrder = async () => {
     return new Error(error.message || "Unknown error");
   }
 };
+export const getSingleOrder = async (id: string) => {
+  try {
+    
+    
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/order/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies())?.get("accessToken")!.value,
+        },
+        next: {
+          tags: ["order"],
+        },
+      }
+    );
+
+    return res.json();
+  } catch (error: any) {
+    return new Error(error.message || "Unknown error");
+  }
+};
 export const deleteOrder = async (id: string) => {
   try {
     const res = await fetch(
@@ -84,7 +107,7 @@ export const deleteOrder = async (id: string) => {
 };
 export const orderStatusChange = async (id: string, status: string) => {
   try {
-    console.log(status);
+   
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/order/status/${id}`,

@@ -13,6 +13,7 @@ type IMedicineState = {
   city: string;
   address: string;
   phone: string;
+  customerName: string;
 };
 const initialState: IMedicineState = {
   items: [],
@@ -21,6 +22,7 @@ const initialState: IMedicineState = {
   city: "",
   address: "",
   phone: "",
+  customerName: ""
 };
 
 const cartSlice = createSlice({
@@ -80,12 +82,19 @@ const cartSlice = createSlice({
       state.address = "";
       state.city = "";
       state.phone = "";
+      state.customerName = ""
     },
     updateCity: (state, action) => {
       state.city = action.payload;
     },
     updateShippingAddress: (state, action) => {
       state.address = action.payload;
+    },
+    updatePhone: (state, action) => {
+      state.phone = action.payload;
+    },
+    updateCustomer: (state, action) => {
+      state.customerName = action.payload;
     },
   },
 });
@@ -119,7 +128,7 @@ export const citySelector = (state: RootState) => {
   return state.cart.city;
 };
 export const findRequiredPrescription = (state: RootState) => {
-  return state.cart.items.some(item => item.prescription === "Yes")
+  return state.cart.items.some((item) => item.prescription === "Yes");
 };
 
 export const shippingAddressSelector = (state: RootState) => {
@@ -127,6 +136,9 @@ export const shippingAddressSelector = (state: RootState) => {
 };
 export const phoneSelector = (state: RootState) => {
   return state.cart.phone;
+};
+export const nameSelector = (state: RootState) => {
+  return state.cart.customerName;
 };
 
 export const grandTotalSelector = (state: RootState) => {
@@ -145,6 +157,7 @@ export const orderSelector = (state: RootState) => {
       address: state.cart.address,
       city: state.cart.city,
       phone: state.cart.phone,
+      customer: state.cart.customerName,
     },
     shippingFee: shippingCostSelector(state),
   };
@@ -157,6 +170,8 @@ export const {
   removeFromCart,
   updateCity,
   updateShippingAddress,
+  updatePhone,
+  updateCustomer
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

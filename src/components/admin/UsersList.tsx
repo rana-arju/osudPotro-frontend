@@ -52,7 +52,7 @@ export default function UsersList({ users }: any) {
     userId: string,
     newStatus: "in-progress" | "blocked"
   ) => {
-    console.log("user status", newStatus);
+    
 
     try {
       const res = await updateStatus(userId, newStatus);

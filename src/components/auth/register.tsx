@@ -44,8 +44,8 @@ const Register = () => {
       } else {
         toast.error(response?.message);
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+ 
       toast.error("Register failed. try again");
     }
   }

@@ -34,15 +34,15 @@ const Login = () => {
         async function onLoginSubmit(values: LoginFormValues) {
           try {
             const response = await loginUser(values);
-            console.log(response);
+         
             if (response?.success) {
               toast.success(response.message);
               router.push("/");
             } else {
               toast.error(response?.message);
             }
-          } catch (error) {
-            console.log(error);
+          } catch  {
+           
             toast.error("Login failed. try again");
           }
         }
