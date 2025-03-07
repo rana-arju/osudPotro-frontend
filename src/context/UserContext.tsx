@@ -1,7 +1,7 @@
 "use client";
 import MedicineLoader from "@/components/loader";
 import { getCurrentUser } from "@/services/AuthService";
-import { IUser } from "@/types/User";
+//import { IUser } from "@/types/User";
 import {
   createContext,
   ReactNode,
@@ -9,10 +9,15 @@ import {
   useEffect,
   useState,
 } from "react";
-
+interface IUserCookie {
+  exp: number;
+  iat: number;
+  role: string;
+  userId: string;
+}
 interface IUserContext {
-  user: IUser | null;
-  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  user: IUserCookie | null;
+  setUser: React.Dispatch<React.SetStateAction<IUserCookie | null>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -20,12 +25,14 @@ interface IUserContext {
 const UserContext = createContext<IUserContext | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUserCookie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleUser = async () => {
     const user = await getCurrentUser();
     setUser(user);
+    console.log("user context", user);
+    
     setIsLoading(false);
   };
   useEffect(() => {

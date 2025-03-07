@@ -225,7 +225,7 @@ export default function ShopPage() {
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="border-2 border-primary">
                 <SelectItem value="all">Default</SelectItem>
                 <SelectItem value="-createdAt">Newest</SelectItem>
                 <SelectItem value="price">Price: Low to High</SelectItem>
