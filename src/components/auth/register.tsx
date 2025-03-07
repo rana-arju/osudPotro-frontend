@@ -16,6 +16,7 @@ import { Button } from "../ui/button";
 import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -25,7 +26,8 @@ const registerSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const Register = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const { refreshUser } = useUser();
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -35,17 +37,16 @@ const Register = () => {
     },
   });
   async function onRegisterSubmit(values: RegisterFormValues) {
- 
     try {
       const response = await registerUser(values);
       if (response?.success) {
         toast.success(response.message);
-        router.push("/")
+        router.push("/");
+        await refreshUser();
       } else {
         toast.error(response?.message);
       }
     } catch {
- 
       toast.error("Register failed. try again");
     }
   }

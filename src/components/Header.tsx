@@ -36,11 +36,12 @@ import { DialogTitle } from "./ui/dialog";
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
-  const user = useUser();
+  const { user, refreshUser } = useUser();
   const handleLogout = async () => {
-    await logout();
-    router.push("/");
-    toast.success("Logout successfull!");
+   await logout();
+   await refreshUser(); // This won't trigger any loading spinner now
+   router.push("/");
+   toast.success("Logout successful!");
   };
 
   return (
@@ -248,7 +249,7 @@ export default function Header() {
               <span className="sr-only">Cart</span>
             </Link>
           </Button>
-          {user?.user ? (
+          {user ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger>
@@ -260,7 +261,7 @@ export default function Header() {
                   <DropdownMenuItem>
                     <Link
                       href={
-                        user?.user?.role === "admin"
+                        user?.role === "admin"
                           ? "/admin"
                           : "/user/account"
                       }

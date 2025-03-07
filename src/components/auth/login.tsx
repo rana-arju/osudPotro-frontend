@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { z } from "zod";
 import {
   Form,
@@ -10,12 +10,13 @@ import {
 } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Lock, Mail } from 'lucide-react';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { loginUser } from '@/services/AuthService';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { Lock, Mail } from "lucide-react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { loginUser } from "@/services/AuthService";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
@@ -24,28 +25,29 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const router = useRouter();
-      const loginForm = useForm<LoginFormValues>({
-        resolver: zodResolver(loginSchema),
-        defaultValues: {
-          email: "",
-          password: "",
-        },
-      });
-        async function onLoginSubmit(values: LoginFormValues) {
-          try {
-            const response = await loginUser(values);
-         
-            if (response?.success) {
-              toast.success(response.message);
-              router.push("/");
-            } else {
-              toast.error(response?.message);
-            }
-          } catch  {
-           
-            toast.error("Login failed. try again");
-          }
-        }
+  const { refreshUser } = useUser();
+  const loginForm = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  async function onLoginSubmit(values: LoginFormValues) {
+    try {
+      const response = await loginUser(values);
+
+      if (response?.success) {
+        toast.success(response.message);
+        router.push("/");
+        await refreshUser();
+      } else {
+        toast.error(response?.message);
+      }
+    } catch {
+      toast.error("Login failed. try again");
+    }
+  }
 
   return (
     <Form {...loginForm}>
@@ -101,6 +103,6 @@ const Login = () => {
       </form>
     </Form>
   );
-}
+};
 
-export default Login
+export default Login;

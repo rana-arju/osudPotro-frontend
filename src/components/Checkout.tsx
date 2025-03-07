@@ -66,13 +66,12 @@ export default function Checkout() {
   const handleCitySelect = (city: string) => {
     dispatch(updateCity(city));
   };
-console.log("phone",phone);
+
 
   const handleShippingAddress = (address: string) => {
     dispatch(updateShippingAddress(address));
   };
   const handlePhone = (phone: string) => {
-    console.log(phone);
     
     dispatch(updatePhone(phone));
   };
@@ -109,7 +108,6 @@ console.log("phone",phone);
       if (!phone) {
         throw new Error("Phone is missing");
       }
-            console.log("heloo2 =====");
 
 
       if (order.medicines.length === 0) {
