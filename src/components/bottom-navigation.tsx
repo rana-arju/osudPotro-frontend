@@ -4,16 +4,27 @@ import { Home, Search, ShoppingCart, User, Pill } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/context/UserContext";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
-
+  const { user } = useUser();
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/products", label: "Products", icon: Pill },
-    { href: "/search", label: "Search", icon: Search },
+    {
+      href: "/products?category=blood-pressure",
+      label: "Search",
+      icon: Search,
+    },
     { href: "/cart", label: "Cart", icon: ShoppingCart },
-    { href: "/account", label: "Account", icon: User },
+    {
+      href: `${
+        user ? (user?.role === "admin" ? "/admin" : "/user/account") : "/auth"
+      }`,
+      label: "Dashboard",
+      icon: User,
+    },
   ];
 
   return (
