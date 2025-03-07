@@ -38,7 +38,7 @@ User can login and registrtation
 
 ## Video Explanation
 
-[![GearCycle store](https://res.cloudinary.com/db8l1ulfq/image/upload/v1741365423/Screenshot_77_r7bajw.png)](https://youtu.be/dil-GmvcHLc?si=-rXV5GSED_GUGLG8)
+[![OsudPotro](https://res.cloudinary.com/db8l1ulfq/image/upload/v1741365423/Screenshot_77_r7bajw.png)](https://youtu.be/qhatCL0QT-E?si=D3SVirYJfo4oSTQ_)
 
 ## Instructions for Running the Application Locally
 
