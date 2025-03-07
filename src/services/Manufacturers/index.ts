@@ -5,8 +5,6 @@ import { cookies } from "next/headers";
 
 export const createManufacturer = async (data: any) => {
   try {
-   
-
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/manufacturer`,
       {
@@ -84,6 +82,21 @@ export const getManufacturerById = async (id: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/manufacturer/${id}`,
+      {
+        next: {
+          tags: ["Manufacturer"],
+        },
+      }
+    );
+    return res.json();
+  } catch (error: any) {
+    return new Error(error.message || "Unknown error");
+  }
+};
+export const getManufacturerMedicinsById = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/manufacturer/medicines/${id}`,
       {
         next: {
           tags: ["Manufacturer"],

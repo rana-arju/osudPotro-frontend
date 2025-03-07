@@ -129,7 +129,7 @@ export default function VerifyOrderPage() {
               </>
             )}
           </div>
-          <Link href="/account" passHref>
+          <Link href="/user/account" passHref>
             <Button className="mt-6 w-full cursor-pointer">View Orders</Button>
           </Link>
         </Card>

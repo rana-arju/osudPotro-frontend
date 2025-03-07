@@ -18,6 +18,7 @@ import {
   findRequiredPrescription,
   nameSelector,
   updateCustomer,
+  updatePhone,
 } from "@/redux/features/cartSlice";
 import { getMe } from "@/services/AuthService";
 import type { IUser } from "@/types/User";
@@ -65,12 +66,15 @@ export default function Checkout() {
   const handleCitySelect = (city: string) => {
     dispatch(updateCity(city));
   };
+console.log("phone",phone);
 
   const handleShippingAddress = (address: string) => {
     dispatch(updateShippingAddress(address));
   };
   const handlePhone = (phone: string) => {
-    dispatch(updateShippingAddress(phone));
+    console.log(phone);
+    
+    dispatch(updatePhone(phone));
   };
   const handleName = (name: string) => {
     dispatch(updateCustomer(name));
@@ -88,6 +92,7 @@ export default function Checkout() {
   const handleUploadComplete = (urls: string[]) => setImageUrls(urls);
   const handleOrder = async () => {
     const orderLoading = toast.loading("Order is being placed");
+    
     try {
       if (!user) {
         router.push("/login");
@@ -96,16 +101,21 @@ export default function Checkout() {
       if (!city) {
         throw new Error("City is missing");
       }
+      
       if (!address) {
         throw new Error("Shipping address is missing");
       }
+
       if (!phone) {
         throw new Error("Phone is missing");
       }
+            console.log("heloo2 =====");
+
 
       if (order.medicines.length === 0) {
         throw new Error("Cart is empty, what are you trying to order ??");
       }
+
       order.shippingInfo.phone = phone;
       order.shippingInfo.city = city;
       order.shippingInfo.address = address;

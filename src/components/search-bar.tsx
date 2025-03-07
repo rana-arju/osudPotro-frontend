@@ -37,7 +37,7 @@ interface SearchBarProps {
 
 export function SearchBar({
   isSearchOpen,
-
+onSearchToggle,
   className,
 }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,7 +48,6 @@ export function SearchBar({
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const debouncedSearch = useDebounce(searchQuery, 300);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -114,8 +113,19 @@ export function SearchBar({
 
   return (
     <div ref={searchRef} className={cn("relative", className)}>
+      <Button
+        onClick={onSearchToggle}
+        className="md:hidden p-2"
+        variant="ghost"
+        size="icon"
+      >
+        {isSearchOpen ? (
+          <X className="h-5 w-5" />
+        ) : (
+          <Search className="h-5 w-5" />
+        )}
+      </Button>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         <Input
           type="text"
           value={searchQuery}

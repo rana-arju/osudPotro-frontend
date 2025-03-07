@@ -31,6 +31,7 @@ import { logout } from "@/services/AuthService";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { SearchBar } from "./search-bar";
+import { DialogTitle } from "./ui/dialog";
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -49,11 +50,11 @@ export default function Header() {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
+              <DialogTitle className="sr-only">Toggle menu</DialogTitle>
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
+            <nav className="grid gap-6 text-lg font-medium pl-5 pt-4">
               <Link
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
@@ -237,7 +238,7 @@ export default function Header() {
             onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
             className={cn(
               "flex items-center",
-              isSearchOpen ? "w-full md:w-80" : "w-0 md:w-80"
+              isSearchOpen ? "w-full md:w-80" : "w-4 md:w-80"
             )}
           />
 
@@ -259,7 +260,9 @@ export default function Header() {
                   <DropdownMenuItem>
                     <Link
                       href={
-                        user?.user?.role === "admin" ? "/admin" : "/account"
+                        user?.user?.role === "admin"
+                          ? "/admin"
+                          : "/user/account"
                       }
                     >
                       Dashboard
