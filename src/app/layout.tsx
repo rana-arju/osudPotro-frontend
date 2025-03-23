@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import "../styles/main.css";
+import "../styles/main.css"
 import { Toaster } from "sonner";
 import Providers from "@/providers/Providers";
 
@@ -29,7 +29,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="custom-container mx-auto flex-1 px-1 md:px-4 py-6">
+            <main>
               {children}
             </main>
             <Toaster richColors position="top-center" />

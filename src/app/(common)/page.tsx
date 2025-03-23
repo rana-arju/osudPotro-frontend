@@ -6,8 +6,11 @@ import { CustomerReviews } from "@/components/customer-reviews";
 import { BrandingSection } from "@/components/branding-slider";
 export default function Home() {
   return (
-    <div className="space-y-10 pb-10">
+    <div >
+  
+
       <HeroSection />
+    
       <BrandingSection />
 
       <FeaturedProducts />
