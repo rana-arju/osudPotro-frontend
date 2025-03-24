@@ -4,6 +4,7 @@ import PopularCategories from "@/components/popular-categories";
 import SpecialOffers from "@/components/special-offers";
 import { CustomerReviews } from "@/components/customer-reviews";
 import { BrandingSection } from "@/components/branding-slider";
+import PromotionalSection from "@/components/promotional-section";
 export default function Home() {
   return (
     <div >
@@ -12,10 +13,11 @@ export default function Home() {
       <HeroSection />
     
       <BrandingSection />
-
-      <FeaturedProducts />
       <PopularCategories />
+      <FeaturedProducts />
+     
       <SpecialOffers />
+      <PromotionalSection />
       <CustomerReviews />
     </div>
   );

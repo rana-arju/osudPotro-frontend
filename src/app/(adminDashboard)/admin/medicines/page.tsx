@@ -4,10 +4,12 @@ import React from 'react'
 
 const ManagementMedicinePage = async () => {
   const allMedicinesInfo = await getAllMedicine({});
-  const medicines = allMedicinesInfo?.data
+  const medicines = allMedicinesInfo
+  console.log("category", medicines);
+
   return (
     <div>
-      <ManageMedicines medicines={medicines} />
+      <ManageMedicines medicines={medicines.data} />
     </div>
   );
 }

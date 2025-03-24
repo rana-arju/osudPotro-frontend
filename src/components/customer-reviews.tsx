@@ -12,7 +12,7 @@ export async function CustomerReviews() {
  const user = await getCurrentUser();
  
   return (
-    <section className="py-12 bg-muted/50">
+    <section className="py-12">
       <div className=" custom-container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">
           What Our Customers Say

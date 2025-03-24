@@ -26,7 +26,7 @@ export default function ProductDetails({ product }: any) {
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-background rounded-lg p-6 flex items-center justify-center">
           <Image
-            src={product?.images?.[0] || "/placeholder.svg"}
+            src={product?.images?.[0] || "https://res.cloudinary.com/db8l1ulfq/image/upload/v1742804695/medicine_xhnv5i.avif"}
             alt={product.name}
             width={400}
             height={400}

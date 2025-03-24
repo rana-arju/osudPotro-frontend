@@ -7,7 +7,7 @@ const ManufacturerPage = async() => {
   
   return (
     <div>
-      <Manufacturers manufacturers={manufacturers.data} />
+      <Manufacturers manufacturers={manufacturers?.data} />
     </div>
   );
 }

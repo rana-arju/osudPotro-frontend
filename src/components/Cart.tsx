@@ -28,8 +28,8 @@ export default function Cart() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center custom-container mx-auto">
+    <div className=" custom-container mx-auto">
+      <div className="flex justify-between items-center">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
           Your Cart
         </h1>
@@ -52,7 +52,7 @@ export default function Cart() {
                 <div key={item._id} className="flex gap-4 py-4 border-b">
                   <div className="w-24 h-24 bg-background rounded-md overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.images[0] || "/placeholder.svg"}
+                      src={item.images[0] || "https://res.cloudinary.com/db8l1ulfq/image/upload/v1742804695/medicine_xhnv5i.avif"}
                       alt={item.name}
                       width={100}
                       height={100}

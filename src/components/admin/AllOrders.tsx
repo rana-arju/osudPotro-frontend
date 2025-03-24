@@ -63,6 +63,8 @@ export default function AllOrders({ orders }: any) {
       setDownloadingOrderId(null);
     }
   };
+  console.log("orders", orders);
+  
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Manage Orders</h1>
@@ -79,9 +81,9 @@ export default function AllOrders({ orders }: any) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders?.map((order: any) => (
-            <TableRow key={order._id}>
-              <TableCell>#{order._id}</TableCell>
+          {orders?.length > 0 && orders?.map((order: any) => (
+            <TableRow key={order?._id}>
+              <TableCell>#{order?._id}</TableCell>
               <TableCell>{order.user.name}</TableCell>
               <TableCell>${order.totalPrice.toFixed(2)}</TableCell>
               <TableCell>
@@ -93,8 +95,8 @@ export default function AllOrders({ orders }: any) {
               </TableCell>
               <TableCell>
                 {order?.medicines?.map((medicine: any) => (
-                  <Badge key={medicine.medicine._id} variant="destructive">
-                    {medicine.medicine.prescription}
+                  <Badge key={medicine?.medicine?._id} variant="destructive">
+                    {medicine?.medicine?.prescription && medicine.medicine?.prescription}
                   </Badge>
                 )) ? (
                   <Badge variant="destructive">Required</Badge>

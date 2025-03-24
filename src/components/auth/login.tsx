@@ -12,7 +12,7 @@ import { loginUser } from "@/services/AuthService"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useUser } from "@/context/UserContext"
-import Link from "next/link"
+
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -87,12 +87,16 @@ const Login = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
+          
               <div className="flex items-center justify-between">
                 <FormLabel>Password</FormLabel>
-                <Link href="/forgot-password" className="text-xs text-primary hover:underline">
+
+            { /*   <Link href="/forgot-password" className="text-xs text-primary hover:underline">
                   Forgot password?
                 </Link>
+                */}
               </div>
+              
               <FormControl>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

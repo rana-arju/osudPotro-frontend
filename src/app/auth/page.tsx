@@ -126,7 +126,7 @@ function QuickLoginButton({ type, setActiveTab }: QuickLoginButtonProps) {
             : "bg-blue-100 text-blue-700 hover:bg-blue-200"
         }`}
     >
-      {type === "admin" ? "Admin Demo" : "Guest Login"}
+      {type === "admin" ? "Admin Demo" : "User Login"}
     </button>
   )
 }

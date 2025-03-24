@@ -35,7 +35,9 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const router = useRouter()
-  const { user, refreshUser } = useUser()
+  const { user, refreshUser } = useUser();
+  console.log("header user", user);
+  
 
   const [mounted, setMounted] = useState(false)
 
@@ -420,12 +422,13 @@ export default function Header() {
                 <DropdownMenuItem asChild>
                   <Link href={user?.role === "admin" ? "/admin" : "/user/account"}>Dashboard</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                {
+                  user?.role !== "admin" && <DropdownMenuItem asChild>
                   <Link href="/user/orders">My Orders</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/user/prescriptions">My Prescriptions</Link>
-                </DropdownMenuItem>
+                }
+            
+        
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={handleLogout}>
                   Logout

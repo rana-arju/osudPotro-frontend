@@ -78,7 +78,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
       const response = await createCategory(values);
       if (response?.success) {
         toast.success(response.message);
-        form.reset();
+        form.reset({name: ""});
       } else {
         toast.error(response?.message);
       }
@@ -93,6 +93,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
       const response = await updateCategory(editingCategoryId, values);
       if (response?.success) {
         toast.success(response.message);
+        form.reset({name: ""});
         setIsEditModalOpen(false);
       } else {
         toast.error(response?.message);

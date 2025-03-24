@@ -69,7 +69,7 @@ export default function UserOrders({ userOrders }: any) {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {userOrders?.map((order: any) => (
-            <Link href={`/orderDetails/${order?.transaction?.id}`} key={order._id}>
+            <Link href={`/orderDetails/${order?.transaction?.id}`} key={order?._id}>
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="flex justify-between items-center">
@@ -88,15 +88,16 @@ export default function UserOrders({ userOrders }: any) {
                   <ul className="space-y-2">
                     {order?.medicines?.map((item: any) => (
                       <li
-                        key={item.medicine._id}
+                        key={item?.medicine?._id}
                         className="flex justify-between"
                       >
                         <span>
-                          {item.medicine.name.slice(0, 10) + "..."} x
+                          {item?.medicine?.name?.slice(0, 10) + "..."} x
                           {item.quantity}
                         </span>
                         <span>
-                          ${(item.medicine.price * item.quantity).toFixed(2)}
+                        
+                          ${ item?.medicine?.price && (item?.medicine?.price * item.quantity).toFixed(2)}
                         </span>
                       </li>
                     ))}

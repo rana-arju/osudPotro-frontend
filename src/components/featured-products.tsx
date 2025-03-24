@@ -13,7 +13,7 @@ export default async function FeaturedProducts() {
       <div >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold tracking-tight">
-            Featured Products
+            Featured Medicines
           </h2>
           <Button variant="outline" asChild>
             <Link href="/products">View All</Link>

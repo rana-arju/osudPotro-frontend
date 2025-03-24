@@ -17,8 +17,6 @@ export default function HeroSection() {
   if (!mounted) return null
 
   return (
- 
-
     <section className="relative w-full overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 w-full h-full">
@@ -33,7 +31,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content container */}
-      <div className="container relative mx-auto px-4 md:px-6 py-16 md:py-24 lg:py-32">
+      <div className="custom-container relative mx-auto py-8 md:py-12 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           {/* Left column - Text content */}
           <motion.div
@@ -45,7 +43,7 @@ export default function HeroSection() {
             <div className="inline-block rounded-full bg-primary/20 dark:bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary dark:text-primary-foreground backdrop-blur-sm">
               New: Free Delivery on Orders Over $50
             </div>
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-white dark:text-white">
+            <h1 className="text-2xl  font-bold tracking-tighter sm:text-5xl md:text-6xl text-white dark:text-white">
               Your Health, <span className="text-primary">Our Priority</span>
             </h1>
             <p className="text-[#E5E5E5] dark:text-[#E5E5E5] text-lg md:text-xl max-w-xl">

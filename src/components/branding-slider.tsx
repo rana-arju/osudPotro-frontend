@@ -54,7 +54,7 @@ export function BrandingSection() {
   const { theme } = useTheme();
 
   return (
-    <section className="py-12 bg-muted">
+    <section className="py-12 ">
       <div className="custom-container mx-auto">
         <h2 className="text-2xl font-bold text-center mb-8">
           Trusted by Leading Brands

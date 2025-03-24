@@ -68,6 +68,11 @@ export default function Manufacturers({ manufacturers }: any) {
 
         if (updated?.success) {
           toast.success("Manufacturer updated successfully");
+          form.reset({
+            name: "",
+            description: "",
+          });
+          
         }
       } else {
         const res = await createManufacturer(values);
@@ -75,7 +80,10 @@ export default function Manufacturers({ manufacturers }: any) {
 
         if (res.success) {
           toast.success(res?.message);
-          form.reset();
+          form.reset({
+            name: "",
+            description: "",
+          });
         }
       }
       setIsDialogOpen(false);
@@ -91,6 +99,7 @@ export default function Manufacturers({ manufacturers }: any) {
       const res = await deleteManufacturer(id);
       if (res.success) {
         toast.success(res?.message);
+        
       } else {
         toast.error(res?.message);
       }
@@ -186,7 +195,7 @@ export default function Manufacturers({ manufacturers }: any) {
               manufacturers.map((manufacturer: any) => (
                 <TableRow key={manufacturer._id}>
                   <TableCell>{manufacturer.name}</TableCell>
-                  <TableCell className="line-clamp-2 max-w-48">{manufacturer.description}</TableCell>
+                  <TableCell className="line-clamp-1 max-w-48">{manufacturer.description}</TableCell>
                   <TableCell>
                     <Button
                       variant="outline"

@@ -25,7 +25,7 @@ export default function ProductCard({ product }: any) {
         <Image
           src={
             product.images?.[0] ||
-            "https://www.lazzpharma.com/Content/ImageData/Product/Small/3917f8e3-7c37-4c3c-910d-b8783a5499e3/KT%20LIQUID%20.webp"
+            "https://res.cloudinary.com/db8l1ulfq/image/upload/v1742804695/medicine_xhnv5i.avif"
           }
           alt={product.name}
           width={300}
