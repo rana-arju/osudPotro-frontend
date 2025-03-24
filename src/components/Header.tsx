@@ -380,7 +380,19 @@ export default function Header() {
                     "flex h-10 items-center px-4 py-2",
                   )}
                 >
-               All Medicines
+              All Medicines
+                </div>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/blogs" legacyBehavior passHref>
+                <div
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary  cursor-pointer",
+                    "flex h-10 items-center px-4 py-2",
+                  )}
+                >
+               Blogs
                 </div>
               </Link>
             </NavigationMenuItem>
@@ -422,11 +434,7 @@ export default function Header() {
                 <DropdownMenuItem asChild>
                   <Link href={user?.role === "admin" ? "/admin" : "/user/account"}>Dashboard</Link>
                 </DropdownMenuItem>
-                {
-                  user?.role !== "admin" && <DropdownMenuItem asChild>
-                  <Link href="/user/orders">My Orders</Link>
-                </DropdownMenuItem>
-                }
+            
             
         
                 <DropdownMenuSeparator />

@@ -109,8 +109,8 @@ function QuickLoginButton({ type, setActiveTab }: QuickLoginButtonProps) {
           loginForm.setValue("email", "admin@gmail.com", { shouldValidate: true })
           loginForm.setValue("password", "admin123", { shouldValidate: true })
         } else {
-          loginForm.setValue("email", "user@gmail.com", { shouldValidate: true })
-          loginForm.setValue("password", "user123", { shouldValidate: true })
+          loginForm.setValue("email", "rana@gmail.com", { shouldValidate: true })
+          loginForm.setValue("password", "12345678", { shouldValidate: true })
         }
       }
     }, 100)

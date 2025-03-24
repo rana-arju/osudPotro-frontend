@@ -9,9 +9,10 @@ import {
   ShoppingCart,
   Users,
   Menu,
+  NotebookPen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 
@@ -25,7 +26,7 @@ const sidebarItems = [
   { icon: PlusSquare, label: "Manage Categories", href: "/admin/categories" },
   { icon: PlusSquare, label: "Manage Medicines", href: "/admin/medicines" },
   { icon: ShoppingCart, label: "Manage Orders", href: "/admin/orders" },
-  { icon: Users, label: "Manage Users", href: "/admin/users" },
+  { icon: NotebookPen, label: "Blogs", href: "/admin/blogs" },
   { icon: Users, label: "Profile manage", href: "/admin/profile" },
 ];
 
@@ -67,6 +68,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </aside>
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
         <SheetContent side="left" className="w-64 p-0">
+        <SheetTitle className="sr-only">Toggle sidebar</SheetTitle>
+
           <Sidebar />
         </SheetContent>
       </Sheet>
@@ -76,12 +79,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 lg:hidden">
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle sidebar</span>
-              </Button>
+                <SheetTitle className="sr-only">Toggle sidebar</SheetTitle>
+                </Button>
               <h1 className="font-semibold">Admin Panel</h1>
             </header>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
+          <SheetTitle className="sr-only">Toggle sidebar</SheetTitle>
+
             <Sidebar />
           </SheetContent>
         </Sheet>

@@ -6,6 +6,8 @@ async function UserOrdersPage({ params }: any) {
   const { id } = await params;
   const res = await getUserOrders(id);
   const userOrders = res.data;
+  console.log("user orders", userOrders);
+  
   return (
     <div>
       <UserOrders userOrders={userOrders} />
