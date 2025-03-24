@@ -21,7 +21,7 @@ export function AddBlogForm() {
   const onSubmit = async (values: BlogFormValues) => {
     try {
       const res = await fetch(
-        `https://portfolio-backend02.vercel.app/api/v1/blog`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/blog`,
         {
           method: "POST",
           headers: {
@@ -36,7 +36,7 @@ export function AddBlogForm() {
 
       if (data.success) {
         toast.success(data.message || "Blog post created successfully");
-        router.push("/blogs");
+        router.push("/admin/blogs");
         router.refresh();
       } else {
         toast.error(data.message || "Failed to create blog post");

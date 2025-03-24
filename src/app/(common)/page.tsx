@@ -13,7 +13,7 @@ export default async function Home() {
 
 
 
-    const res = await fetch(`https://portfolio-backend02.vercel.app/api/v1/blog`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       next: { revalidate: 30 },
@@ -39,7 +39,7 @@ export default async function Home() {
       <SpecialOffers />
       <PromotionalSection />
       <CustomerReviews />
-      <Blogs blogPosts={blogPosts} />
+      <Blogs blogPosts={blogPosts.slice(0,3)} />
     </div>
   );
 }

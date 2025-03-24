@@ -50,10 +50,10 @@ const getFirstWords = (html: string, wordLimit: number) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts?.map((post:any) => (
             <Link href={`/blogs/${post?._id}`} key={post?._id}>
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+              <Card className="h-full hover:shadow-lg transition-shadow duration-300 overflow-hidden py-0">
                 <CardHeader className="p-0">
                   <Image
-                    src={post?.image || "/blog.webp"}
+                    src={post?.image || "https://res.cloudinary.com/db8l1ulfq/image/upload/v1742841645/y9DpT_fyxpqp.jpg"}
                     alt={post?.title}
                     width={600}
                     height={400}

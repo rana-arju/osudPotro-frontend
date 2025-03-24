@@ -8,7 +8,7 @@ import NotFound from "@/app/not-found";
 import sanitizeHtml from "sanitize-html";
 export async function generateMetadata({ params }: any) {
   const { id } = await params;
-  const response = await fetch(`https://portfolio-backend02.vercel.app/api/v1/blog/${id}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog/${id}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: any) {
 export default async function BlogPost({ params }: any) {
   const { id } = await params;
 
-  const response = await fetch(`https://portfolio-backend02.vercel.app/api/v1/blog/${id}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog/${id}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });

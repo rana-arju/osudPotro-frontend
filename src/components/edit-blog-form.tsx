@@ -30,7 +30,7 @@ export function EditBlogForm({ id }: { id: string }) {
       try {
         setIsLoading(true);
         const res = await fetch(
-          `https://portfolio-backend02.vercel.app/api/v1/blog/${id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/blog/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,7 +67,7 @@ export function EditBlogForm({ id }: { id: string }) {
   const onSubmit = async (values: BlogFormValues) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/blog/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/blog/${id}`,
         {
           method: "PATCH",
           headers: {

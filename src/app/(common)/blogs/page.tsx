@@ -9,7 +9,7 @@ export default async function BlogPage() {
   let blogPosts = [];
 
   try {
-    const response = await fetch(`https://portfolio-backend02.vercel.app/api/v1/blog`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       next: { revalidate: 30 },

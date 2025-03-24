@@ -52,7 +52,7 @@ export function BlogsTable() {
  useEffect(() => {
    const fetchBlogs = async () => {
      try {
-       const res = await fetch(`https://portfolio-backend02.vercel.app/api/v1/blog`);
+       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog`);
        const data = await res.json();
    
 
@@ -153,7 +153,7 @@ export function BlogsTable() {
   const handleDelete = async() => {
  try {
    const res = await fetch(
-     `${process.env.NEXT_PUBLIC_API_URL}/blog/${deleteId}`,
+     `${process.env.NEXT_PUBLIC_BACKEND_API}/blog/${deleteId}`,
      {
        method: "DELETE",
        headers: {
