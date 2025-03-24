@@ -7,6 +7,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 
 export default function OrderDetails({ details }: any) {
+  console.log("Details", details.medicines);
+  
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
       case "pending":
@@ -102,27 +104,28 @@ export default function OrderDetails({ details }: any) {
           <div>
             <h2 className="font-semibold text-lg mb-2">Medicines</h2>
             <div className="space-y-4">
-              {details.medicines.map((item: any) => (
+              { details?.medicines?.map((item: any) => (
                 <div
-                  key={item._id}
+                  key={item?._id}
                   className="flex items-center space-x-4 border-b pb-3"
                 >
+              
                   <Image
-                    src={item.medicine.images[0]}
-                    alt={item.medicine.name}
+                    src={item?.medicine?.images[0] || "https://res.cloudinary.com/db8l1ulfq/image/upload/v1742804695/medicine_xhnv5i.avif"}
+                    alt={item?.medicine?.name ? item?.medicine?.name : "Medicine"}
                     width={50}
                     height={50}
                     className="rounded-md object-cover"
                   />
                   <div className="flex-1">
-                    <p className="font-medium">{item.medicine.name}</p>
+                    <p className="font-medium">{item?.medicine?.name && item.medicine.name}</p>
                     <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity} | Price: $
-                      {item.medicine.price.toFixed(2)}
+                      Quantity: {item?.quantity} | Price: $
+                      {item?.medicine?.price && item?.medicine?.price.toFixed(2)}
                     </p>
                   </div>
                 </div>
-              ))}
+              ) )}
             </div>
           </div>
 

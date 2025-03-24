@@ -78,7 +78,7 @@ export default function EditMedicine({ categories, manufacturers }: any) {
 
           // Find the category and manufacturer IDs
           const categoryId = medicine.category._id || medicine.category
-          const manufacturerId = medicine.manufacturer._id || medicine.manufacturer
+          const manufacturerId = medicine?.manufacturer?._id || medicine.manufacturer
 
           form.reset({
             name: medicine.name,
@@ -100,12 +100,15 @@ export default function EditMedicine({ categories, manufacturers }: any) {
             setExistingImages(medicine.images)
             setImageUrls(medicine.images)
           }
+          setIsLoading(false)
         } else {
           toast.error("Failed to fetch medicine details!")
+          setIsLoading(false)
         }
       } catch (error) {
         console.error("Error loading medicine:", error)
         toast.error("Error loading medicine data")
+        setIsLoading(false)
       } finally {
         setIsLoading(false)
       }
