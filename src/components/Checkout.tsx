@@ -141,7 +141,7 @@ export default function Checkout() {
     }
   };
   return (
-    <div className="px-1 md:px-4 py-8 min-h-screen">
+    <div className="py-8 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Checkout</h1>
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2">

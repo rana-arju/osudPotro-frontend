@@ -167,7 +167,7 @@ onSearchToggle,
                 >
                   {medicine.images && medicine.images.length > 0 ? (
                     <Image
-                      src={medicine.images[0] || "/placeholder.svg"}
+                      src={medicine.images[0]}
                       alt={medicine.name}
                       width={40}
                       height={40}

@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function SpecialOffers() {
   return (
     <section className="py-8">
-      <div className=" px-4 md:px-6">
-        <h2 className="text-2xl font-bold tracking-tight mb-6">
+      <div className=" custom-container mx-auto">
+        <h2 className="text-2xl font-bold text-center mb-8">
           Special Offers
         </h2>
 

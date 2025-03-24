@@ -13,7 +13,7 @@ export async function CustomerReviews() {
  
   return (
     <section className="py-12 bg-muted/50">
-      <div className=" px-4 md:px-6">
+      <div className=" custom-container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">
           What Our Customers Say
         </h2>

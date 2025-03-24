@@ -82,7 +82,7 @@ export default function Header() {
       </div>
 
       {/* Main header */}
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between">
+      <div className="custom-container mx-auto flex h-16 items-center justify-between">
         {/* Mobile menu trigger and logo */}
         <div className="flex items-center gap-4">
           <Sheet>
@@ -371,60 +371,6 @@ export default function Header() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:text-primary">
-                Medical Devices
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="w-[550px] p-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h3 className="font-medium text-sm mb-2 text-primary">Popular Categories</h3>
-                      <ul className="space-y-2">
-                        {[
-                          { title: "Blood Pressure", href: "/products?category=blood-pressure" },
-                          { title: "Diabetes Care", href: "/products?category=diabetes" },
-                          { title: "Thermometers", href: "/products?category=thermometers" },
-                          { title: "First Aid", href: "/products?category=first-aid" },
-                        ].map((item) => (
-                          <li key={item.title}>
-                            <Link href={item.href} className="text-sm hover:text-primary">
-                              {item.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-4">
-                        <Link
-                          href="/products?category=devices"
-                          className="text-sm font-medium text-primary hover:underline"
-                        >
-                          View All Medical Devices →
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bg-muted/30 rounded-lg p-4">
-                      <h3 className="font-medium text-sm mb-2">Featured Products</h3>
-                      <div className="space-y-3">
-                        <FeaturedItem
-                          title="Digital BP Monitor"
-                          description="Accurate blood pressure monitoring"
-                          href="/products/digital-bp-monitor"
-                          discount="10% OFF"
-                        />
-                        <FeaturedItem
-                          title="Advanced Glucose Meter"
-                          description="Fast and accurate results"
-                          href="/products/advanced-glucose-meter"
-                          discount="New"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
               <Link href="/products" legacyBehavior passHref>
                 <div
                   className={cn(
@@ -432,7 +378,7 @@ export default function Header() {
                     "flex h-10 items-center px-4 py-2",
                   )}
                 >
-                  All Products
+               All Medicines
                 </div>
               </Link>
             </NavigationMenuItem>
@@ -463,7 +409,7 @@ export default function Header() {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button variant="ghost" size="icon" className="cursor-pointer">
                   <User className="h-5 w-5" />
                   <span className="sr-only">User menu</span>
                 </Button>

@@ -9,7 +9,7 @@ export default async function FeaturedProducts() {
  const featuredProducts = res?.data;
 
   return (
-    <section className="py-8">
+    <section className="py-8 custom-container mx-auto">
       <div >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold tracking-tight">

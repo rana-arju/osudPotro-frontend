@@ -15,7 +15,7 @@ const Manufacturer = async ({ params }: any) => {
   const medicins = response?.data;
 
   return (
-    <div className="py-2 md:py-8 px-2 md:px-4 min-h-screen">
+    <div className="py-2 md:py-8 custom-container mx-auto min-h-screen">
       <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6">
         Available Medicines
       </h1>

@@ -11,7 +11,7 @@ export default async function ProductPage({ params }: any) {
   const product = productData?.data;
 
   return (
-    <div>
+    <div className="custom-container mx-auto">
       <ProductDetails product={product} />
     </div>
   );

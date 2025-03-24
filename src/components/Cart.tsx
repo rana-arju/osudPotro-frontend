@@ -29,7 +29,7 @@ export default function Cart() {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center custom-container mx-auto">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
           Your Cart
         </h1>
