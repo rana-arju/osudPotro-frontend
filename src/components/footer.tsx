@@ -104,25 +104,7 @@ export function Footer() {
                 <span className="sr-only">Instagram</span>
               </a>
             </div>
-            <div className="mt-4">
-              <h4 className="text-sm font-semibold mb-2">
-                Subscribe to our newsletter
-              </h4>
-
-              <form className="grid grid-cols-1 gap-2  md:grid-cols-2 md:gap-0">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-grow px-3 py-2 text-sm rounded-l-md border border-input bg-background"
-                />
-                <button
-                  type="submit"
-                  className="px-3 py-2 text-sm font-semibold rounded-r-md bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  Subscribe
-                </button>
-              </form>
-            </div>
+       
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-muted-foreground/10 text-center text-sm text-muted-foreground">

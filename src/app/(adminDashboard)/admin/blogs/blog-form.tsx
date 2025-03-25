@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Loader2, Plus, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Editor } from "@tinymce/tinymce-react"
+import Image from "next/image"
 
 // Mock blog data for edit mode
 const mockBlog = {
@@ -231,10 +232,12 @@ export function BlogForm({ id }: { id: string | null }) {
                   <div className="flex items-center gap-4">
                     {field.value && (
                       <div className="relative rounded-md overflow-hidden w-40 h-40">
-                        <img
+                        <Image
                           src={field.value}
                           alt="Featured image"
                           className="object-cover w-full h-full"
+                          height={50}
+                          width={50}
                         />
                       </div>
                     )}

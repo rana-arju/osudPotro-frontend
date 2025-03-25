@@ -1,24 +1,32 @@
-import type React from "react";
-import type { Metadata } from "next";
-import Header from "@/components/Header";
+import type React from "react"
+import type { Metadata } from "next"
+import Header from "@/components/Header"
+import { UserDashboardSidebar } from "@/components/user/dashboard-sidebar"
 
 export const metadata: Metadata = {
-  title: "OsudPotro - Your Trusted Online Pharmacy",
-  description: "Get your medicines delivered at your doorstep",
-};
+  title: "OsudPotro - User Dashboard",
+  description: "Manage your account, orders, and prescriptions",
+}
 
-export default function RootLayout({
+export default function UserDashboardLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="custom-container mx-auto flex-1 px-1 md:px-4 py-6">
-        {children}
-      </main>
+      <div className="flex flex-1">
+        {/* Desktop sidebar - hidden on mobile */}
+        <div className="hidden md:block w-64 shrink-0 border-r min-h-[calc(100vh-64px)]">
+          <UserDashboardSidebar />
+        </div>
+
+        {/* Main content area with proper padding */}
+        <main className="flex-1 p-4 md:p-6 w-full">{children}</main>
+      </div>
     </div>
-  );
+  )
 }
+

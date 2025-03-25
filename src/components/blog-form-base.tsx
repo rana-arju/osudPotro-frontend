@@ -23,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Editor } from "@tinymce/tinymce-react";
 import { uploadToCloudinary } from "@/lib/cloudinary";
+import Image from "next/image";
 
 // Form schema
 export const blogSchema = z.object({
@@ -240,10 +241,12 @@ export function BlogFormBase({
                   <div className="flex items-center gap-4">
                     {field.value && (
                       <div className="relative rounded-md overflow-hidden w-40 h-40">
-                        <img
-                          src={field.value || "/placeholder.svg"}
+                        <Image
+                          src={field.value}
                           alt="Featured image"
                           className="object-cover w-full h-full"
+                          height={60}
+                          width={60}
                         />
                       </div>
                     )}

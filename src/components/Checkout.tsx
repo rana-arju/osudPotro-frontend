@@ -83,6 +83,8 @@ export default function Checkout() {
     const getUser = async () => {
       const res = await getMe();
       const data = res?.data;
+      console.log("get me", data, res);
+      
       setUser(data);
     };
     getUser();
@@ -94,7 +96,7 @@ export default function Checkout() {
     
     try {
       if (!user) {
-        router.push("/login");
+        router.push("/auth");
         throw new Error("Please login first.");
       }
       if (!city) {

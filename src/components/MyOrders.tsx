@@ -1,5 +1,8 @@
-"use client";
-import React from "react";
+"use client"
+
+import { useState } from "react"
+import Link from "next/link"
+import moment from "moment"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,87 +13,108 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import Link from "next/link";
-import moment from "moment";
-import { Button } from "./ui/button";
-import { Trash2 } from "lucide-react";
-import { deleteOrder } from "@/services/order";
-import { toast } from "sonner";
+} from "@/components/ui/alert-dialog"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import { Trash2, ExternalLink, Package } from "lucide-react"
+import { deleteOrder } from "@/services/order"
+import { toast } from "sonner"
+
 const MyOrders = ({ myOrders }: any) => {
+  const [isDeleting, setIsDeleting] = useState<string | null>(null)
+
   const handleDeleteOrder = async (orderId: string) => {
     try {
-      const res = await deleteOrder(orderId);
+      setIsDeleting(orderId)
+      const res = await deleteOrder(orderId)
       if (res?.success) {
-        toast.success(res?.message);
+        toast.success(res?.message)
       } else {
-        toast.error(res?.message);
+        toast.error(res?.message)
       }
     } catch {
-      toast.error("Order delete failed. try again");
+      toast.error("Order delete failed. Try again")
+    } finally {
+      setIsDeleting(null)
     }
-  };
+  }
+
+  if (!myOrders || myOrders.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <Package className="mx-auto h-12 w-12 text-muted-foreground opacity-50" />
+        <h3 className="mt-4 text-lg font-medium">No orders found</h3>
+        <p className="mt-2 text-sm text-muted-foreground">You haven&apos;t placed any orders yet.</p>
+        <Button className="mt-4" asChild>
+          <Link href="/products">Browse Products</Link>
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {myOrders?.map((order: any) => (
         <div
           key={order._id}
-          className="flex justify-between items-center p-4 border rounded-lg"
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border rounded-lg gap-4"
         >
-          <Link
-            href={`/orderDetails/${order?.transaction?.id}`}
-            className="flex justify-between items-center flex-grow"
-          >
-            <div>
-              <h3 className="font-medium">
-                Transaction ID: {order?.transaction?.id}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {moment(order?.transaction?.date_time).format("lll")}
-              </p>
-            </div>
-            <div className="text-right">
-              <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
-                {order.status}
-              </span>
-              <p className="font-medium mt-1">
-                Total Price: {order.totalPrice} BDT
-              </p>
-            </div>
-          </Link>
-          {order.status === "Pending" && (
-            <AlertDialog>
-              <AlertDialogTrigger asChild className="cursor-pointer">
-                <Button variant="destructive" size="sm" className="ml-4 ">
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your order.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel className="cursor-pointer">
+          <div className="flex-grow">
+            <Link
+              href={`/orderDetails/${order?.transaction?.id}`}
+              className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-4"
+            >
+              <div>
+                <h3 className="font-medium">
+                  Transaction ID: <span className="font-normal text-muted-foreground">{order?.transaction?.id}</span>
+                </h3>
+                <p className="text-sm text-muted-foreground">{moment(order?.transaction?.date_time).format("lll")}</p>
+              </div>
+              <div className="flex flex-col items-start sm:items-end gap-1">
+                <Badge variant="default">{order.status}</Badge>
+                <p className="font-medium">Total: {order.totalPrice} BDT</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Button variant="outline" size="sm" className="sm:ml-4" asChild>
+              <Link href={`/orderDetails/${order?.transaction?.id}`}>
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Details
+              </Link>
+            </Button>
+
+            {order.status === "Pending" && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" disabled={isDeleting === order._id}>
+                    <Trash2 className="h-4 w-4 mr-2" />
                     Cancel
-                  </AlertDialogCancel>
-                  <AlertDialogAction
-                    className="cursor-pointer"
-                    onClick={() => handleDeleteOrder(order._id)}
-                  >
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently cancel your order.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleDeleteOrder(order._id)}>Delete</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+          </div>
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default MyOrders;
+
+
+export default MyOrders
+

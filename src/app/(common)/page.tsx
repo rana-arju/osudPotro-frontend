@@ -6,6 +6,7 @@ import { CustomerReviews } from "@/components/customer-reviews";
 import { BrandingSection } from "@/components/branding-slider";
 import PromotionalSection from "@/components/promotional-section";
 import Blogs from "@/components/Blogs";
+import NewsletterSectionAlt from "@/components/newsletter-section-alt";
 export default async function Home() {
   let blogPosts = [];
 
@@ -40,6 +41,8 @@ export default async function Home() {
       <PromotionalSection />
       <CustomerReviews />
       <Blogs blogPosts={blogPosts.slice(0,3)} />
+           <NewsletterSectionAlt />
+     
     </div>
   );
 }
