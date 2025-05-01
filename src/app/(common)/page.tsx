@@ -11,9 +11,6 @@ export default async function Home() {
   let blogPosts = [];
 
   try {
-
-
-
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/blog`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -23,26 +20,26 @@ export default async function Home() {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
     const result = await res.json();
-    blogPosts = result.data;
+    if (!result || !result.data) {
+      throw new Error("No data found");
+    }
+    blogPosts = result?.data;
   } catch (error) {
     console?.error("Error fetching projects:", error);
   }
   return (
-    <div >
-  
-
+    <div>
       <HeroSection />
-    
+
       <BrandingSection />
       <PopularCategories />
       <FeaturedProducts />
-     
+
       <SpecialOffers />
       <PromotionalSection />
       <CustomerReviews />
-      <Blogs blogPosts={blogPosts.slice(0,3)} />
-           <NewsletterSectionAlt />
-     
+      <Blogs blogPosts={blogPosts.slice(0, 3)} />
+      <NewsletterSectionAlt />
     </div>
   );
 }

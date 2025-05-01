@@ -9,7 +9,8 @@ import { getCurrentUser } from "@/services/AuthService";
 export async function CustomerReviews() {
   const res = await getAllReview();
   const reviews = res?.data
- const user = await getCurrentUser();
+  const user = await getCurrentUser();
+
  
   return (
     <section className="py-12">
